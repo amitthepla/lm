@@ -1,0 +1,64 @@
+<ion-view view-title="Team" ng-controller="TeamPaymentCtrl" ng-init="init()">
+			<ion-header-bar>
+				<div class="bar bar-header bar-dark login-header">
+					<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+					<h1 class="title" style="text-align:center;">Make a payment</h1>	
+				</div>
+			</ion-header-bar>
+			<ion-content class="scroll-content">
+				<ion-scroll direction="y" style="height:90vh;">
+					<ion-item id="error_div">
+						<div class="nrm-fnt" id="payment_error"></div>
+					</ion-item>
+					<ion-item class="nrm-fnt">
+						<div ng-if="team_detail.activity_name" class="fnt-clr" ng-if="team_detail.activity_name">{{team_detail.activity_name}}</div>
+						<div ng-if="team_detail.name" ng-if="team_detail.name"><span class="fnt-bld">Team: </span> <span>{{team_detail.name}}</span></div>
+						<div style="color:red;" ng-if="team_detail.amount"><span>Balance: $</span><span id="remain_amt">{{team_detail.amount}}</span></div>
+						<div class="mt10">
+							<div class="fl" style="margin-top: 20px;">$&nbsp;</div>
+							<div class="fl">
+								<label class="item item-input">
+									<input type="text" numbers-only="numbers-only" placeholder="Payment Amount" class="payment_amount" ng-model="number" id="{{team_detail.id}}" max_val="{{team_detail.amount}}"/>
+								</label>
+							</div>
+							<div class="cb"></div>
+						</div>
+						<div class="nrm-fnt mt10">
+							<div class="fl mt10">
+								<input type="checkbox" id="check_{{team_detail.id}}" ng-click="checkpayment(team_detail.id,team_detail.amount);"/>
+							</div>
+							<div class="fl mt10" style="margin-left:5px;">Pay full balance</div>
+							<div class="cb"></div>
+						</div>
+					</ion-item>
+					<ion-item>
+						<div class="fnt-bld fnt-clr">Payment Information</div>
+						<div id="payment_loader" style="display:none;">
+							<img src="img/ajax-loader.gif"/>
+						</div>
+						<div id="payment_inf" style="display:none;">
+							<div class="mt10" ng-click="openPaymentMethod(team_detail.id)" style="height:auto;">
+								<div>
+									<div class="fnt-bld">Payment Method</div>
+									<div> 
+										<div class="nrm-fnt mt10" style="color:red;" ng-if="isError">No payment method added.</div>
+										<div class="nrm-fnt" ng-if="!isError">{{activeCreditCard.card_type}} in {{activeCreditCard.last4}}</div>
+										<div class="item-icon-right">
+											<i class="icon ion-ios-arrow-right"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="nrm-fnt mt10" ng-click="addCreditCard();" ng-if="isError"><a href="javascript:void(0);" style="color:#0000FF;">Add a payment method</a></div>
+						</div>
+					</ion-item>
+					<ion-item ng-if="team_detail.amount">
+						<div>
+							<button class="button button-full button-energized" ng-click="paynow({{team_detail.id}});" ng-disabled="isDisabled">
+								<span style="position:relative;">Pay Now</span><span id="loader-span"><img src="img/ajax-loader.gif"/></span>
+							</button>
+						</div>
+					</ion-item>
+				</ion-scroll>
+			</ion-content>
+		</ion-view>

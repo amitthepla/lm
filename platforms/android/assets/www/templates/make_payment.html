@@ -1,0 +1,140 @@
+<ion-view view-title="Make a payment" ng-controller="MakePaymentCtrl" ng-init="init()">
+			<ion-header-bar>
+				<div class="bar bar-header bar-dark login-header">
+					<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+					<h1 class="title" style="text-align:center;">Make a payment</h1>
+				</div>	
+			</ion-header-bar>
+			<ion-content>
+			<ion-scroll direction="y" style="height:90vh;" id="scroll_list" delegate-handle="small">
+				<ion-item id="error_div">
+					<div class="nrm-fnt" id="payment_error"></div>
+				</ion-item>
+				<ion-item class="payment-content">
+					<div>
+						<div class="fl" style="width:60%;">
+							<div class="fnt-bld">Order: {{orderDetail.business_id}}</div>
+							<div class="nrm-fnt">{{orderDetail.date}}</div>
+							<div class="nrm-fnt">Total: {{orderDetail.adjusted_price}}</div>
+						</div>
+						<div class="fr" style="width:40%;">
+							<div class="fnt-bld bal_txt" style="color:red;" ng-if="orderDetail.outstanding_balance_amount">{{orderDetail.payment_label}}: {{orderDetail.outstanding_balance_amount | currency}}</div>
+						</div>
+						<div class="cb"></div>
+					</div>
+					<div ng-repeat="registration in orderDetail.registrations" on-finish-render="ngRepeatFinished">
+						<div class="fl mt10" style="width:60%;">
+							<div class="fnt-bld" style="white-space:pre-line;">{{registration.registration_product.activity}}</div>
+							<div class="nrm-fnt">Registration Product: {{registration.registration_product.human_team}}</div>
+							<!-- <div class="nrm-fnt" ng-if="!registration.team_prepaid">Price: ${{registration.product_pricing_details.amount}}</div> -->
+							<div class="nrm-fnt" ng-if="registration.team_prepaid">Price: prepaid</div>
+							<div class="nrm-fnt" ng-if="regList.payment_options.show_payment_due">{{regList.payment_options.outstanding_balance | currency}} due {{regList.payment_options.payment_due}}</div>
+						</div>
+						<div class="fr mt10" style="width:40%;">
+							<div class="fnt-bld bal_txt" style="color:red;" ng-if="registration.payment_options.show_outstanding_balance">Balance: {{registration.payment_options.outstanding_balance | currency}}</div>
+							<div class="payment-div" ng-if="registration.team_prepaid == false && registration.payment_options.outstanding_balance > 0">
+								<div class="fl nrm-fnt pay_unit" style="margin-top: 20px;">$</div>
+								<div class="fl" style="width:90%;">
+									<label class="item item-input amount-txt">
+										<input type="text" numbers-only="numbers-only" placeholder="Amount" class="payment_amount" ng-model="number" ng-keyup="CalculateSum()" id="{{registration.id}}" max_val="{{registration.payment_options.outstanding_balance}}"/>
+									</label>
+								</div>
+								<div class="cb"></div>
+							</div>
+						</div>
+						<div class="cb"></div>
+						<div ng-if="registration.team_prepaid == false && registration.payment_options.outstanding_balance > 0" class="mt10">
+							<div class="fr">
+								<div class="nrm-fnt fl" style="margin-top:5px;margin-right:10px;">Pay full balance</div>
+									<div class="fr" style="padding-right: 6px;">
+										<label class="toggle">
+			                                <input type="checkbox" ng-click="checkpayment('check_{{registration.id}}',{{registration.payment_options.outstanding_balance}});" id="check_{{registration.id}}">
+			                                <div class="track">
+			                                    <div class="handle"></div>
+			                                </div>
+		                            	</label>
+		                            </div>
+		                        <div class="cb"></div>
+		                    </div>
+		                    <div class="cb"></div>
+						</div>
+					</div>
+					<div ng-repeat="product in orderDetail.product_line_items">
+						<div class="fl mt10" style="width:60%;">
+							<div class="fnt-bld" style="white-space:pre-line;">{{product.product.title}}</div>
+							<div class="nrm-fnt">Price: {{product.gross_price | currency}}</div>
+						</div>
+						<div class="fr mt10" style="width:40%;">
+							<div class="fnt-bld bal_txt" style="color:red;" ng-if="product.payment_options.show_payment_options">Balance: ${{product.payment_options.outstanding_balance}}</div>
+							<div class="payment-div" ng-if="product.payment_options.show_payment_options">
+								<div class="fl nrm-fnt pay_unit" style="margin-top: 20px;">$</div>
+								<div class="fl" style="width:90%;">
+									<label class="item item-input amount-txt">
+										<input type="text" numbers-only="numbers-only" placeholder="Amount" class="payment_amount" ng-model="number" ng-keyup="CalculateSum()" id="{{product.id}}" max_val="{{product.payment_options.outstanding_balance}}"/>
+									</label>
+								</div>
+								<div class="cb"></div>
+							</div>
+						</div>
+						<div class="cb"></div>
+						<div ng-if="product.payment_options.show_payment_options" class="mt10">
+							<div class="fr">
+								<div class="nrm-fnt fl" style="margin-top:5px;margin-right:10px;">Pay full balance</div>
+									<div class="fr" style="padding-right: 6px;">
+										<label class="toggle">
+			                                 <input type="checkbox" ng-click="checkpayment('check_{{product.id}}',{{product.payment_options.outstanding_balance}});" id="check_{{product.id}}" id="check_{{product.id}}">
+			                                <div class="track">
+			                                    <div class="handle"></div>
+			                                </div>
+		                            	</label>
+		                            </div>
+		                        <div class="cb"></div>
+		                    </div>
+		                    <div class="cb"></div>
+						</div>
+					</div>
+				</ion-item>
+				<ion-item>
+					<div class="fr fnt-bld" style="margin-right: 10px;">
+						<div><span>Payment Amount: </span><span id="amount">{{totAmt | currency}}</span></div>
+					</div>
+					<div class="cb"></div>
+				</ion-item>
+				<ion-item>
+					<div class="fl left-block-method">
+						<div class="fl small-font-10" style="margin-right:3px;">
+							Payment Method:
+						</div>
+						<div class="fl">
+							<div id="payment_loader" style="display:none;">
+								<img src="img/ajax-loader.gif"/>
+							</div>
+							<div class="payment_inf" style="display:none;">
+								<div ng-click="openPaymentMethod(team_detail.id)" style="height:auto;">
+									<div>
+										<div> 
+											<div class="small-font-10" style="color:red;" ng-if="isError">No Payment Method Added.</div>
+											<div class="small-font-11" style="color:#000;" ng-if="!isError">{{activeCreditCard.card_type}} in {{activeCreditCard.last4}}</div>
+										</div>
+									</div>
+								</div>
+								<div ng-click="addCreditCard();" ng-if="isError"><a href="javascript:void(0);" class="small-font-11">Add a Payment Method</a></div>
+							</div>
+						</div>
+						<div class="cb"></div>
+					</div>
+					<div class="fr arrow_div payment_inf right-block-method" ng-click="openPaymentMethod(team_detail.id)" style="display:none;">
+						<i class="ion-chevron-right"></i>
+					</div>
+					<div class="cb"></div>
+				</ion-item>
+				<ion-item>
+					<div ng-if="orderDetail.outstanding_balance_amount">
+						<button class="button button-full button-energized" ng-click="paynow({{orderDetail.id}});" ng-disabled="isDisabled">
+							<span style="position:relative;">Pay Now</span><span id="loader-span"><img src="img/ajax-loader.gif"/></span>
+						</button>
+					</div>
+				</ion-item>
+				</ion-scroll>
+			</ion-content>
+</ion-view>

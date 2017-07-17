@@ -1,0 +1,47 @@
+<style>
+.mainPhotoDiv{
+	width:100%;
+}
+.ChildDiv{
+	float:left;
+	margin:1%;
+	width:23%;
+}
+.CleatB{
+	clear:both;
+}
+.ImgClsSite{
+	max-width:100%;
+	border:1px solid #FFFFFF;
+}
+</style>
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+<ion-view view-title="News" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+			<h1 class="title" style="text-align:center;">Photos</h1>	
+		</div>
+	</ion-header-bar>
+	<ion-content class="scroll-content" style="position:relative;">
+		<ion-scroll direction="y" class="TeamNewsPhotoScroll">
+			<div id="DisplayImagesSite" style="margin-top:5px;">
+				<!--<ion-item ng-repeat="(key, Photos) in PhotosdataMore">
+					<div class="fnt-bld" style="margin-left:27px;"><img src="{{Photos.thumbnail}}" /></div>
+					<div class="item-icon-right PhotoCls" PhotoId="{{Photos.id}}">
+						<i class="icon ion-ios-arrow-right"></i>
+					</div>
+				</ion-item>-->
+			</div>	
+		</ion-scroll>
+	</ion-content>
+	<div style="margin-top:-50px;display:none;" class="DisplaySelectButtonSite">
+		<button class="button button-full button-energized" id="SelectSelectPhotoSite">
+			Select Photo
+		</button>
+	</div>	
+</ion-view>	
+</ion-side-menu-content>
+</ion-side-menus>

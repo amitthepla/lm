@@ -1,0 +1,38 @@
+<ion-view view-title="Login" name="login-view">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<h1 class="title">Leaguer</h1>
+		</div>
+	</ion-header-bar>
+	<ion-content ng-controller="LoginCtrl" ng-init="init()" class="scroll-content">
+		<div class="lg-logo"><img src="img/logo.png"/></div>
+        <div class="login-box">
+        <div class="login-content"><b>Sign In to your account</b></div>
+			<div class="login-form">
+				<form name="LoginForm" novalidate>
+					<div class="list">
+						<label class="item item-input" ng-class="{ 'has-error' : LoginForm.email.$invalid && !LoginForm.email.$pristine }">
+							<input type="email" ng-model="loginData.email" name="email" placeholder="Email Address" required autocomplete="off">
+						</label>
+						<label class="item item-input" ng-class="{ 'has-error' : LoginForm.password.$invalid && !userForm.name.$pristine }">
+							<input type="password" ng-model="loginData.password" name="password" placeholder="Password" required>
+						</label>
+					</div>
+					<button class="button button-full button-energized" ng-disabled="LoginForm.$invalid" ng-click="doLogin()" ng-if="showLogin">
+						Sign In
+					</button>
+					<button class="button button-full button-energized" ng-if="showLoggingin">
+                        <span style="position:relative;">Sign In</span>
+                        <span style="position:absolute;top:12px !important;padding-left:5px;"><img src="img/ajax-loader.gif"/></span>					</button>
+				</form>
+				<button class="button button-block button-positive" ng-click="fbLogin()" ng-if="showFb">
+					Sign in with Facebook
+				</button>
+                <button class="button button-block button-positive" ng-if="showFbLoad">
+                    <span style="position:relative;">Sign in with Facebook</span>
+                    <span style="position:absolute;top:12px !important;padding-left:5px;"><img src="img/ajax-loader.gif"/></span>
+                </button>
+			</div>
+            </div>
+		</ion-content>
+</ion-view>

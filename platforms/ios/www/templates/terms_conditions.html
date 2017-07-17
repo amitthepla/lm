@@ -1,0 +1,83 @@
+<ion-view view-title="Program Detail" ng-controller="TermsConditionCtrl" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack1()"></a>
+			<h1 class="title" style="text-align:center;">Sign Waiver</h1>	
+			<!--button class="button" ng-click="completeTnCProcess()">Done</button-->
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<ion-scroll direction="y" style="height:87vh;">
+		<ion-item>
+		<div>
+			<div class="nrm-fnt mt10 mb10" ng-if="Waiver.waiver_details.waiver_details.show_terms_conditions || Waiver.waiver_details.waiver_details.waiver_requires_guardian">
+				<div style="white-space:normal;border:1px solid #ddd;padding:10px;" ng-bind-html="Waiver.waiver_details.waiver_details.waiver_content">
+				</div>
+			</div>
+			<div class="nrm-fnt mt10 mb10" ng-if="Waiver.waiver_details.waiver_details.must_request_adult_waiver">
+				<div style="white-space:normal;border:1px solid #ddd;padding:10px;" ng-bind-html="Waiver.waiver_details.waiver_details.adult_waiver_content">
+				</div>
+			</div>
+			<div class="nrm-fnt mt10 mb10" ng-if="Waiver.waiver_details.waiver_details.must_request_adult_waiver == false && Waiver.waiver_details.waiver_details.show_terms_conditions == false && Waiver.waiver_details.waiver_details.waiver_requires_guardian == false">
+				<div  style="white-space:normal;border:1px solid #ddd;padding:10px;" ng-bind-html="Waiver.waiver_details.waiver_details.else_content">
+				</div>
+			</div>
+		</div>
+		<div ng-if="Waiver.waiver_details.waiver_details.waiver_requires_guardian || Waiver.waiver_details.waiver_details.show_terms_conditions">
+			<div ng-if="Waiver.waiver_details.waiver_details.waiver_requires_guardian">
+				<div class="fl nrm-fnt" ng-bind-html="Waiver.waiver_details.waiver_details.guardian_content"></div>
+				<div class="fr sche-tog">
+					<label class="toggle toggle-balanced">
+						<input type="checkbox" class="tncChk" id="waiver_is_guardian"/>
+						<div class="track">
+							<div class="handle"></div>
+						</div>
+					</label>
+				</div>
+				<div class="cb"></div>
+			</div>
+			<div class="mt10" ng-if="Waiver.waiver_details.waiver_details.waiver_requires_guardian || Waiver.waiver_details.waiver_details.show_terms_conditions">
+				<div class="fl nrm-fnt" ng-bind-html="Waiver.waiver_details.waiver_details.agreement_content"></div>
+				<div class="fr sche-tog">
+					<label class="toggle toggle-balanced">
+						<input type="checkbox" class="tncChk" id="waiver_accepted"/>
+						<div class="track">
+							<div class="handle"></div>
+						</div>
+					</label>
+				</div>
+				<div class="cb"></div>
+			</div>
+		</div>
+		<div ng-if="Waiver.waiver_details.waiver_details.must_request_adult_waiver">
+			<form name="WaiverForm" id="WaiverForm" novalidate>
+				<div class="nrm-fnt mt10 mb10" style="white-space:normal;border:1px solid #ddd;padding:10px;">
+					<label class="item item-input">
+						<input type="text" placeholder="First Name" ng-model="waiverData.firstname" name="firstname" required>
+					</label>
+					<label class="item item-input">
+						<input type="text" placeholder="Last Name" ng-model="waiverData.lastname" name="lastname" required>
+					</label>
+					<label class="item item-input">
+						<input type="email" placeholder="Email" ng-model="waiverData.email" name="email" required>
+					</label>
+					<label class="item item-input">
+						<input type="tel" placeholder="Phone" ng-model="waiverData.phone" name="phone" required>
+					</label>
+				</div>
+			</form>
+		</div>
+		</ion-item>
+		<ion-item>
+			<div class="mt10 mb10">
+				<button class="button button-full button-energized TnC" ng-click="completeTnCProcess()">
+					Add to Cart
+				</button>
+				<div style="width:100%;text-align:center;display:none;" class="RegistrationLoader">
+					<img src="img/loader.gif" border="0"/>
+				</div>
+			</div>
+		</ion-item>
+		</ion-scroll>
+	</ion-content>
+</ion-view>

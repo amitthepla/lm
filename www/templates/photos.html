@@ -1,0 +1,18 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+		<ion-side-menu-content>
+			<ion-view view-title="Photos" ng-controller="PhotosCtrl" ng-init="init()">
+				<ion-header-bar>
+					<div class="bar bar-header bar-dark login-header">
+						<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+						<h1 class="title" style="text-align:center;">Photos</h1>	
+					</div>
+				</ion-header-bar>
+				<ion-content>
+					<input type="file" id="file" name="file" class="button button-bar button-positive"/><br/>
+      <button class="button button-bar button-balanced" ng-click="fileUpload()">Upload To Server</button>
+				<!--p>{{data}}</p-->
+				</ion-content>
+			</ion-view>	
+		</ion-side-menu-content>
+</ion-side-menus>

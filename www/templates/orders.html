@@ -1,0 +1,63 @@
+<ion-side-menus>
+    <ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+    <ion-side-menu-content>
+        <ion-view view-title="Order History" ng-controller="OrderCtrl" ng-init="init()">
+            <ion-header-bar>
+                <div class="bar bar-header bar-dark login-header">
+                    <button ng-click="toggleLeft()" class="button icon ion-navicon"></button>
+                    <h1 class="title" style="text-align:center;">Order History</h1>
+                </div>
+            </ion-header-bar>
+            <ion-content>
+                <div class="tab-menu">
+                    <div class="fl tab" id="awaiting_payment" ng-click="changeOrder('awaiting_payment')">Outstanding Balance</div>
+                    <div class="fl tab" id="past" ng-click="changeOrder('past')">Past Order</div>
+                    <div class="cb"></div>
+                </div>
+                <div style="height:45px;"id='main_content_ion'></div>
+                <ion-scroll direction="y" style="height:87vh;" id="scroll_list" delegate-handle="small">
+                    <ion-item ng-repeat="order in orders">
+                        <div ng-click="showDetail(order.business_id)">
+                            <div style='font-weight:bold;height:50px;background-color:#e5e5e5' class="order-head">
+                                <div class="fl sche-name calnder-hd nrm-fnt fnt-bld">Order: {{order.business_id}}</div>
+                                <div class="fr sche-name calnder-hd nrm-fnt fnt-bld">{{order.date}} </div>
+                                <div class="cb"></div>
+                            </div>
+                            <div class="cb" style="height:10px;"></div>
+                            <div>
+                                <div class="fl wid-75">
+                                    <div class="mt10" ng-repeat="value_reg in order.registrations" ng-if="order.registrations.length">
+                                        <div class="fnt-bld fnt-clr" style="white-space:pre-line">{{value_reg.registration_product.activity}}</div>
+                                        <div class="nrm-fnt" style="color:red;" ng-if="value_reg.payment_options.show_outstanding_balance == true"><span>Balance: ${{value_reg.payment_options.outstanding_balance}}</span><span ng-if="value_reg.payment_options.show_payment_due == true">, Due {{value_reg.payment_options.payment_due}}</span></div>
+                                        <div class="nrm-fnt" ng-if="value_reg.payment_options.show_outstanding_balance == false">Price: ${{order.gross_price}}</div>
+                                        <div class="nrm-fnt"></div>
+                                    </div>
+                                    <div class="mt10" ng-if="!order.registrations.length">
+                                        <div class="nrm-fnt">Price: {{order.adjusted_price}}</div>
+                                    </div>
+                                </div>
+                                <div class="fr" style="position:relative;">
+                                    <div class="item-icon-right">
+                                        <i class="icon ion-ios-arrow-right" style="top:24px;"></i>
+                                    </div>
+                                </div>
+                                <div class="cb" style="height:10px;"></div>
+                            </div>
+                            <div class="cb"></div>
+                        </div>
+                        <div class="mt10" ng-if="order_typ=='awaiting_payment'">
+                            <button class="button button-full button-energized" ng-click="makePayment(order.business_id)">
+                                Make a payment
+                            </button>
+                        </div>
+                    </ion-item>
+                    <ion-items ng-if="isMessage">
+                        <div style="text-align:center;margin-top:10px;margin-bottom:10px;color:red;" id="norecord" class="nrm-fnt">No data found.</div>
+                    </ion-items>
+                    <ion-infinite-scroll on-infinite="LoadMore()" distance="1%" ng-if="!noMoreItemsAvailable"></ion-infinite-scroll>
+                    <ion-item style="border: 1px solid #fff;padding-bottom:50px;" ng-if="!isMessage"></ion-item>
+                </ion-scroll>
+            </ion-content>
+        </ion-view>	
+    </ion-side-menu-content>
+</ion-side-menus>

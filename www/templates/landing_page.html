@@ -1,0 +1,37 @@
+<ion-view view-title="Landing Page" name="landing-view" ng-controller="LandCtrl" ng-init="init()">
+			<ion-header-bar>
+				<div class="bar bar-header bar-dark login-header">
+				<!--button ng-click="toggleLeft()" class="button icon ion-navicon"></button-->
+					<h1 class="title" style="text-align:center;">Leaguer </h1>
+				</div>
+			</ion-header-bar>
+			<ion-content>
+				<ion-item id="profile_details" href="#/profile" style="display:none;">
+					<div class="item-icon">
+						<div class="fl list-img"><img src="img/profile.png"></div>
+						<div class="fl list-name"><p class="fnt-bld">Profile</p></div>
+						<div class="cb"></div>
+					</div>
+					<div class="item-icon-right">
+						<i class="icon ion-ios-arrow-right"></i>
+					</div>
+				</ion-item>
+				<ion-item class="list-head fnt-clr">
+					Select your league or club
+				</ion-item>
+                <ion-scroll direction="y" style="height:87vh;">
+				<ion-item ng-repeat="club in clubs | orderBy:'name'" ng-click="saveOrgId({{club.org_id}});">
+                    <div class="item-icon land-icon">
+                        <div class="fl list-img fnt-bld"><img src="{{club.logo}}"/>
+                        </div>
+                        <div class="fl list-name">{{club.name}}</div>
+                        <div class="cb"></div>
+                    </div>
+					<div class="item-icon-right">
+						<i class="icon ion-ios-arrow-right"></i>
+					</div>
+				</ion-item>
+				<ion-item style="border: 1px solid #fff;padding-bottom:65px;"></ion-item>
+                </ion-scroll>
+			</ion-content>
+</ion-view>

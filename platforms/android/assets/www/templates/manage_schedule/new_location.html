@@ -1,0 +1,33 @@
+<ion-view view-title="New Location" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="GoBack()"></a>
+			<h1 class="title" style="text-align:center;">New Location</h1>	
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<ion-item>
+			<div class="list">
+				<label class="item item-input">
+					<input type="text" placeholder="Name*" ng-model="NewLocation.name">
+				</label>
+				<label class="item item-input">
+					<input type="text" placeholder="Address" ng-model="NewLocation.address">
+				</label>
+				<label class="item item-input">
+					<input type="tel" placeholder="Phone" ng-model="NewLocation.phone">
+				</label>
+				<label class="item item-input">
+					<textarea placeholder="Additional Info" style="height:100px;" ng-model="NewLocation.info"></textarea>
+				</label>
+			</div>
+		</ion-item>
+		<ion-item>
+			<div class="mt10 mb10">
+				<button class="button button-full button-energized" ng-click="save_location();" ng-disabled="!NewLocation.name.length">
+					<span style="position:relative;">Save Location</span><span id="loader-span2"><img src="img/ajax-loader.gif"/></span>
+				</button>
+			</div>
+		</ion-item>
+	</ion-content>
+</ion-view>

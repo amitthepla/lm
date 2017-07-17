@@ -1,0 +1,34 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+<ion-view view-title="News" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+			<h1 class="title" style="text-align:center;">Select Page</h1>	
+		</div>
+	</ion-header-bar>
+	<ion-content class="scroll-content" style="margin-top:10px;">
+		<ion-scroll direction="y" class="TeamNewsAlbumScroll">
+		
+			
+			<div ng-repeat="(key, ChildTeamLinks) in ChildTeamLinksdataMore2Site" style="position:relative;width:100%;">
+				<div style="position:absolute;top:17px;left:19px;z-index:999;"><input type="radio" name="ChildTeamLinksRad2" class="ChildTeamLinksPage2Site" value="{{ChildTeamLinks.name}}" ChildTeamLinksId2Site="{{ChildTeamLinks.id}}" ChildTeamPermaLinksId2Site="{{ChildTeamLinks.permalink}}" /></div>
+				<ion-item>
+					<div class="fnt-bld" style="margin-left:27px;white-space:initial;width:80%;">{{ChildTeamLinks.name}}</div>
+					<div class="item-icon-right ChildTeamLinksCls2Site" ChildTeamLinkId2Site="{{ChildTeamLinks.id}}" style="width:20%" ng-if="ChildTeamLinks.totalChildren > 0">
+						<i class="icon ion-ios-arrow-right"></i>
+					</div>
+				</ion-item>
+			</div>
+			<div class="NoLinksFoundSite" style="display:none;"></div>
+		</ion-scroll>
+	</ion-content>
+	<div style="bottom:10px;width:100%;position:absolute;display:none;" class="DisplayTeamChildPageSelectButton2Site">
+		<button class="button button-full button-energized" id="SelectTeamChildPageLink2Site">
+			Select Page
+		</button>
+	</div>
+</ion-view>	
+</ion-side-menu-content>
+</ion-side-menus>

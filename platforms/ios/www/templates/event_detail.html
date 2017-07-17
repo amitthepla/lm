@@ -1,0 +1,113 @@
+<ion-view view-title="Events" ng-controller="EventCtrl" ng-init="init()">
+            <ion-header-bar>
+                <div class="bar bar-header bar-dark login-header">
+                    <a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+                    <h1 class="title" style="text-align:center;">Event Details</h1>
+					<button class="button btn-day" style="margin-left:3px;border-color: #444 !important;">{{eventDetail.day}}</button>
+                </div>
+            </ion-header-bar>
+            <ion-content>
+                <ion-scroll direction="y" style="height:87vh;">
+                <ion-item>
+					<!--div class="fnt-bld fnt-clr" style="height:30px;" ng-if="eventDetail.name != 'NA'">{{eventDetail.name}}</div>
+					<div class="fnt-bld fnt-clr" style="height:30px;" ng-if="eventDetail.name == 'NA'">{{eventDetail.home_team}}</div-->
+					<div class="fnt-bld fnt-clr" style="height:60px;white-space:initial;">
+						<span ng-if="eventDetail.home_team != 'TBD' && eventDetail.visiting_team != 'TBD'">{{eventDetail.visiting_team}} @ {{eventDetail.home_team}}</span>
+						<span ng-if="eventDetail.home_team != 'TBD' && eventDetail.visiting_team == 'TBD'">{{eventDetail.home_team}} ({{eventDetail.type}})</span>
+						<span ng-if="eventDetail.home_team == 'TBD' && eventDetail.visiting_team != 'TBD'">{{eventDetail.visiting_team}} ({{eventDetail.type}})</span>
+					</div>
+					<div style="height:30px;" class="nrm-fnt" ng-if="eventDetail.name != 'NA'">{{eventDetail.name}}</div>   <div style="height:30px;" class="nrm-fnt">
+                        <span ng-if="eventDetail.date != 'NA'">{{eventDetail.date}}</span>
+						<span ng-if="eventDetail.date != 'NA' && eventDetail.time != 'NA'" style="margin-right: -4px;margin-left: 2px;">@&nbsp;</span>
+                        <span ng-if="eventDetail.time != 'NA'">{{eventDetail.time}}</span>
+                    </div>
+                </ion-item>
+                <ion-item ng-click="showLocation('{{eventDetail.location}}');" ng-if="eventDetail.full_address != '' && eventDetail.location != ''">
+                    <div class="fnt-bld fnt-clr" style="height:30px;">
+						Location
+					</div>
+					<div style="height:25px;color:#0000FF;" class="nrm-fnt" ng-if="venue">{{venue}}</div>
+					<div style="height:25px;color:#0000FF;" class="nrm-fnt" ng-if="venue1">{{venue1}}</div>
+					<div style="height:25px;color:#0000FF;" class="nrm-fnt" ng-if="venue2">{{venue2}}</div>
+					<div style="height:25px;color:#0000FF;" class="nrm-fnt" ng-if="eventDetail.location != 'NA' && !venue && !venue1&& !venue2">{{eventDetail.location}}</div>
+                </ion-item>
+				<ion-item ng-if="eventDetail.full_address != '' && eventDetail.location == ''">
+                    <div class="fnt-bld fnt-clr" style="height:30px;">
+						Location
+					</div>
+					<div style="height:25px;" class="nrm-fnt" ng-if="venue">{{venue}}</div>
+					<div style="height:25px;" class="nrm-fnt" ng-if="venue1">{{venue1}}</div>
+					<div style="height:25px;" class="nrm-fnt" ng-if="venue2">{{venue2}}</div>
+					<div style="height:25px;" class="nrm-fnt" ng-if="eventDetail.location != 'NA' && !venue && !venue1&& !venue2">{{eventDetail.location}}</div>
+                </ion-item>
+                <ion-item>
+					<div style="height:30px;">
+						<span class="fnt-bld fnt-clr">{{eventDetail.activity_type}}:</span>
+						<span class="nrm-fnt">{{eventDetail.activity_title}}</span>
+					</div>
+					<div style="height:30px;">
+                        <span class="fnt-bld fnt-clr">Event Type:</span>
+                        <span class="nrm-fnt">{{eventDetail.type}}</span>
+                    </div>
+                    <div style="height:30px;" ng-if="homeTeam">
+                        <span class="fnt-bld fnt-clr">Home:</span>
+                        <span class="nrm-fnt">{{homeTeam}}</span>
+                    </div>
+                    <div style="height:30px;" ng-if="visitingTeam">
+                        <span class="fnt-bld fnt-clr">Visitor:</span>
+                        <span class="nrm-fnt">{{visitingTeam}}</span>
+                    </div>
+					<div style="height:30px;" ng-if="teams">
+                        <span class="fnt-bld fnt-clr">Team(s):</span>
+                        <span class="nrm-fnt">{{teams}}</span>
+                    </div>
+                </ion-item>
+				<ion-item ng-if="eventDetail.home_score || eventDetail.visiting_score">
+					<div class="fnt-bld fnt-clr">Results</div>
+					<!--div id="score_list">
+						<div class="score-div" ng-if="eventDetail.home_score != 'null'">
+							<div class="fl">{{eventDetail.home_team}}</div>
+							<div class="fr">{{eventDetail.home_score}}</div>
+							<div class="cb"></div>
+						</div>
+						<div class="score-div" ng-if="eventDetail.visiting_score != 'null'">
+							<div class="fl">{{eventDetail.visiting_team}}</div>
+							<div class="fr">{{eventDetail.visiting_score}}</div>
+							<div class="cb"></div>
+						</div>
+						<div style="height:3px;"></div>
+					</div-->
+					<div id="score_list" ng-repeat="scoreResult in scoreResults" style="margin-top:10px;">
+						<div class="score-div">
+							<div class="fl">{{eventDetail.home_team}}</div>
+							<div class="fr team-score">
+								<div class="fl">{{scoreResult.homeScore}}</div>
+								<div class="fr ion-arrow-left-b" ng-if="scoreResult.homeScore > scoreResult.visitScore"></div>
+								</div>
+							
+							<div class="cb"></div>
+						</div>
+						<div class="score-div">
+							<div class="fl">{{eventDetail.visiting_team}}</div>
+							<div class="fr team-score">
+								<div class="fl">{{scoreResult.visitScore}}</div>
+								<div class="fr ion-arrow-left-b" ng-if="scoreResult.visitScore > scoreResult.homeScore"></div>
+							</div>
+							<div class="cb"></div>
+						</div>
+						<div style="height:3px;"></div>
+					</div>
+				</ion-item>
+                <ion-item>
+                    <div class="fnt-bld fnt-clr" style="height:30px;">Details</div>
+					<div class="nrm-fnt" ng-if="eventDetail.description != 'NA'">{{eventDetail.description}}</div>
+					<div class="nrm-fnt" ng-if="eventDetail.description == 'NA'"></div>
+                </ion-item>
+                <ion-item style="border-bottom: 1px solid #fff;height:50px;"></ion-item>
+                </ion-scroll>
+            </ion-content>
+            <div class="bar bar-footer bar-dark">
+				<!--button class="button" ng-click="enter_result()">Enter Result</button-->
+				<!--button class="button" ng-click="cancel_postpone()">Cancel/Postpone</button-->
+            </div>
+</ion-view>

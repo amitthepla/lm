@@ -1,0 +1,115 @@
+<style> 
+.monthPre{
+	color: gray;
+	text-align: center;
+}
+.monthNow{
+	text-align: center;
+}
+.dayNow{
+	border: 2px solid black;
+	color: #FF0000;
+	text-align: center;
+}
+.calendar td{
+	htmlContent: 2px;
+	width: 40px;
+	font-size:16px;
+}
+.monthNow th{
+	text-align: center;
+	background-color: #dddddd;
+    color: #000094;
+    font-weight: bold;
+    padding: 2px;
+	vertical-align: middle;
+	font-size:18px;
+}
+.dayNames{
+	background: #CCCCCC;
+	color: #000000;
+	text-align: center;
+	font-weight:bold;
+}
+.navIcon{
+	width:48px;
+	height:48px;
+	vertical-align:middle;
+}
+
+</style> 
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+		<ion-side-menu-content>
+			<ion-view view-title="Photos"  ng-init="init()">
+				<ion-header-bar>
+					<div class="bar bar-header bar-dark login-header">
+						<!--<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>-->
+						<button ng-click="toggleLeft()" class="button icon ion-navicon"></button>
+						<h1 class="title" style="text-align:center;">Calendars(All)</h1>	
+					</div>
+				</ion-header-bar>
+				<ion-content>
+					<div id="calendar"></div> 
+					<div style="height:20px;"></div>
+					<ion-scroll direction="y" class="ionScrollCal" id="scroll_list" delegate-handle="small" ng-if="calendarevents.length">
+						<div ng-repeat="(key, value) in calendarevents | groupBy: 'actual_date' | toArray:true" id="{{value[0]['actual_date']}}" class='repeat_div' style="height:100%;">
+						<!--<div ng-repeat="value in calendarevents" id="{{value[0]['actual_date']}}" class='repeat_div'>-->
+							<div style='font-weight:bold;height:50px;background-color:#e5e5e5'>
+								<div class="fl sche-name calnder-hd" >{{value[0]['day']}}</div>
+								<div class="fr sche-name calnder-hd"> {{value[0]['dateVal']}} </div>
+								<div class="cb"></div>
+							</div>
+							<div style="height:10px;"></div>
+<div ng-repeat="activity in value" class="calender-data">
+	
+								<div class="main-block">
+								<div class="main-block-row">
+									<div class="block1" ng-if="activity.time != 'NA'" ng-click="goEventDetail('{{activity.id}}')">{{activity.time}}</div>
+									<div class="block1" ng-if="activity.time == 'NA'"></div>
+									<div class="block2">
+										<div class="full-width" ng-if="activity.home_team != 'NA' && activity.visiting_team != 'NA'" ng-click="goEventDetail('{{activity.id}}')">{{activity.visiting_team}} @ {{activity.home_team}} <span style="color:#999;">({{activity.status}})</span></div>
+										
+										<div class="full-width" ng-if="activity.home_team != 'NA' && activity.visiting_team == 'NA'" ng-click="goEventDetail('{{activity.id}}')">{{activity.home_team}} <span style="color:#999;">({{activity.status}})</span></div>
+										
+										<div class="full-width" ng-if="activity.home_team == 'NA' && activity.visiting_team != 'NA'" ng-click="goEventDetail('{{activity.id}}')">{{activity.visiting_team}} <span style="color:#999;">({{activity.status}})</span></div>
+										
+										 <div ng-if="activity.name != 'NA'" ng-click="goEventDetail('{{activity.id}}')">({{activity.name}})</div>
+										
+										<div class="full-width" ng-if="(activity.name == 'NA' && activity.type != 'NA' && activity.type != 'Game' && activity.home_team != 'NA' && activity.visiting_team != 'NA') || (activity.name == 'NA' && activity.type != 'NA' && (activity.home_team == 'NA' || activity.visiting_team == 'NA'))" ng-click="goEventDetail('{{activity.id}}')">({{activity.type}})</div>
+										
+	
+										<div ng-click="showLocation('{{activity.location}}');" style="color:#0000FF;" class="full-width" ng-if="activity.venue != 'NA' && activity.location != ''">{{activity.venue}}</div>
+										
+										<div class="full-width" ng-if="activity.venue != 'NA' && activity.location == ''">{{activity.venue}}</div>
+										<div ng-click="showLocation('{{activity.location}}');" class="full-width" ng-if="activity.venue == null && activity.full_address == null && activity.location != null">{{activity.location}}</div>
+										<div ng-click="showLocation('{{activity.location}}');" style="color:#0000FF;"  class="full-width" ng-if="activity.venue == null && activity.full_address != null && activity.location != null">{{activity.full_address}}</div>
+									</div>
+									<div class="block3"><div class="fr right-arrw" ng-click="goEventDetail('{{activity.id}}')"></div></div>
+								</div>
+								
+								</div>
+
+</div>
+						</div>
+						<ion-item ng-if="calendarevents.length>3" style="border: 1px solid #fff;padding-bottom:23px;"></ion-item>
+					</ion-scroll>
+					<ion-items>
+						<div style='font-weight:bold;height:50px;background-color:#e5e5e5' ng-if="showCurrentDate">
+							<div class="fl sche-name calnder-hd" >{{cur_day}}</div>
+							<div class="fr sche-name calnder-hd">{{cur_date}}</div>
+							<div class="cb"></div>
+						</div>
+						<div style="text-align:center;color:red;display:none;font-weight:bold;border:1px solid #CCCCCC;padding-top:10px;padding-bottom:10px;" id="norecordmonth"></div>
+					</ion-items>
+				</ion-content>
+				
+				<div class="bar bar-footer bar-dark">
+					<button class="fl mng-sch" ng-click="goTodayCalendar()" id="today_btn">Today</button>
+					<button class="fl mng-sch" ng-click="goToListMonth('listvalue');">List</button>
+					<button class="fl mng-sch" style="text-decoration:underline;">Month</button>
+					<button class="fl mng-sch" ng-click="createEventMonth();">Create Event</button>
+				</div>
+			</ion-view>	
+		</ion-side-menu-content>
+</ion-side-menus>

@@ -1,0 +1,156 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+		<ion-side-menu-content>
+			<ion-view view-title="Post News" ng-init="init()">
+				<ion-header-bar>
+					<div class="bar bar-header bar-dark login-header">
+						<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+						<h1 class="title" style="text-align:center;">Post News</h1>	
+					</div>
+				</ion-header-bar>
+				<ion-content class="scroll-content">
+					<ion-scroll direction="y" style="height:89vh;">
+						<ion-item>
+							<div class="fnt-bld fnt-clr">News</div>
+							<div class="mt10 mb10">
+								<div class="list">
+									<label class="item item-input">
+										<input type="text" placeholder="Headline*" id="site_news_item_headline" name="news_item[headline]">
+									</label>
+									<label class="item item-input">
+										<textarea id="site_news_item_details" name="news_item[details]" Placeholder="Details"></textarea>
+									</label>
+								</div>
+							</div>
+						</ion-item>
+						<ion-item>
+							<div class="fnt-bld fnt-clr">Photos</div>
+							<div class="list list-inset item item-input ng-pristine ng-untouched ng-valid nrm-fnt" style="color: #444;font-family: 'OpenSans Normal' !important;height: 44px;" id="selectPhotoOptionSite">
+								<div class="nrm-fnt">
+								  Select a photo or album
+								</div>
+								<div class="item-icon-right">
+									<i class="icon ion-ios-arrow-right"></i>
+								</div>
+							</div>
+							<div class="list list-inset item item-input ng-pristine ng-untouched ng-valid nrm-fnt" style="color: #444;font-family: 'OpenSans Normal' !important;min-height: 44px;height:auto;display:none;" id="DisplayPhotoDetailsSite">
+							</div>
+						</ion-item>
+						
+						
+						<ion-item>
+							<div class="fnt-bld fnt-clr">Include an Optional</div>
+							<div style="padding-left:11px;">
+								<div class="nrm-fnt" style="padding:5px;"><input type="radio" class="selectDefaultOptiontype" value="0" name="SelectOption" checked="checked"/> None</div>
+								<div class="nrm-fnt" style="padding:5px;"><input type="radio" class="selectLinkOptiontype" value="1" name="SelectOption"/> Add a link</div>
+								<div class="nrm-fnt" style="padding:5px;"><input type="radio" class="selectArtOptiontype" value="2" name="SelectOption"/> News Article</div>
+							</div>	
+						</ion-item>
+						
+						<ion-item class="SelectAddLinkOption" style="display:none;">
+							<div class="list list-inset item item-input ng-pristine ng-untouched ng-valid nrm-fnt" style="color: #444;font-family: 'OpenSans Normal' !important;height: 44px;" id="selectLinkArticleSite">
+								<div class="nrm-fnt">
+								  Add a link
+								</div>
+								<div class="item-icon-right">
+									<i class="icon ion-ios-arrow-right"></i>
+								</div>
+							</div>
+							<div class="list list-inset item item-input ng-pristine ng-untouched ng-valid nrm-fnt" style="color: #444;font-family: 'OpenSans Normal' !important;min-height: 44px;height:auto;display:none;" id="DisplayLinkPageDetailsSite"></div>
+						</ion-item>
+						
+						<ion-item class="SelectNewsArticleOption" style="display:none;">
+							<div class="list list-inset item item-input ng-pristine ng-untouched ng-valid nrm-fnt" style="color: #444;font-family: 'OpenSans Normal' !important;height: 44px;" id="writenewsarticlesite">
+								<div class="nrm-fnt">
+								  Write a news article
+								</div>
+								<div class="item-icon-right">
+									<i class="icon ion-ios-arrow-right"></i>
+								</div>
+							</div>
+							<div class="list list-inset item item-input ng-pristine ng-untouched ng-valid nrm-fnt" style="color: #444;font-family: 'OpenSans Normal' !important;min-height: 44px;height:auto;display:none;" id="DisplayWriteNewsArtiSite">
+								<textarea id="site_news_article_details" placeholder="News Article..." name="news_item[newsdetails]"></textarea>
+							</div>
+						</ion-item>
+						<ion-item>
+							<div class="fnt-bld fnt-clr">Post News To</div>
+							
+								<div class="mt10 mb10">
+								<div class="fl nrm-fnt">News Feeds</div>
+								<div class="fr sche-tog">
+									<label class="toggle toggle-balanced">
+										<input type="checkbox" class="newsFeedCls" checked="checked" value="1"/>
+										<div class="track">
+											<div class="handle"></div>
+										</div>
+									</label>
+								</div>
+								<div class="cb"></div>
+							</div>
+							
+							
+							<div class="list list-inset item item-input ng-pristine ng-untouched ng-valid nrm-fnt" style="color: #444;font-family: 'OpenSans Normal' !important;height: 44px;" ng-click="selectFeeds()">
+								<div class="nrm-fnt">
+								  Select News Feeds:
+								</div>
+								<div class="item-icon-right">
+									<i class="icon ion-ios-arrow-right"></i>
+								</div>
+							</div>
+							<div class="list list-inset item item-input ng-pristine ng-untouched ng-valid nrm-fnt" style="color: #444;font-family: 'OpenSans Normal' !important;min-height: 44px;height:auto;display:none;" id="DisplayAllSelectedkeywords"></div>
+							
+							
+							<div class="mt10 mb10 DisplayFbStatus" style="display:none;">
+								<div class="fl nrm-fnt">Facebook</div>
+								<div class="fr sche-tog">
+									<label class="toggle toggle-balanced">
+										<input type="checkbox" class="social_FB" checked="checked" value="FB"/>
+										<div class="track">
+											<div class="handle"></div>
+										</div>
+									</label>
+								</div>
+								<div class="cb"></div>
+							</div>
+							<div class="mt10 mb10 DisplayTwStatus" style="display:none;">
+								<div class="fl nrm-fnt">Twitter</div>
+								<div class="fr sche-tog">
+									<label class="toggle toggle-balanced">
+										<input type="checkbox" class="social_TW" checked="checked" value="TW"/>
+										<div class="track">
+											<div class="handle"></div>
+										</div>
+									</label>
+								</div>
+								<div class="cb"></div>
+							</div>
+							<div class="mt10 mb10">
+								<div class="fl nrm-fnt">Email and SMS (Text Msg)</div>
+								<div class="fr sche-tog">
+									<label class="toggle toggle-balanced">
+										<input type="checkbox" class="chkEmailSmsSite" value="emailsms"/>
+										<div class="track">
+											<div class="handle"></div>
+										</div>
+									</label>
+								</div>
+								<div class="cb"></div>
+							</div>
+							
+							
+						</ion-item>
+						<ion-item>
+							<div class="mt10 mb10 displayButton">
+								<button class="button button-full button-energized" id="SiteBtnPostNews">
+									Post News
+								</button>
+							</div>
+							<div class="DisplayLoader" style="text-align:center;display:none;">
+								<img src="img/loader.gif" />
+							</div>
+						</ion-item>
+					</ion-scroll>
+				</ion-content>
+			</ion-view>	
+		</ion-side-menu-content>
+</ion-side-menus>

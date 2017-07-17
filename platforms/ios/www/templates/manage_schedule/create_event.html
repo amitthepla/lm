@@ -1,0 +1,112 @@
+<ion-view view-title="Events" ng-init="init()">
+<ion-header-bar>
+	<div class="bar bar-header bar-dark login-header">
+		<a class="button icon-left ion-chevron-left button-clear" ng-click="GoBack()"></a>
+		<h1 class="title" style="text-align:center;">{{heading}}</h1>	
+	</div>
+</ion-header-bar>
+	<ion-content>
+		<ion-scroll direction="y" style="height:87vh;">
+		<form name="AddEditEventForm" ng-submit="SubmitForm()">
+			<ion-item>
+				<div class="list">
+					<select class="item item-input item-select selectlabel nrm-fnt" ng-change="selectActivity()" id="activity" ng-model="CreateEvent.activity">
+						<option value="" ng-disabled="true" class="nrm-fnt">Select Activity</option>
+						<option value="{{activity.id}}" class="nrm-fnt" ng-repeat="activity in activities" ng-selected="(previousRecord.activity_id && previousRecord.activity_id == activity.id) || (!previousRecord.activity_id && edit_activity_id && edit_activity_id == activity.id)">{{activity.title}}</option>
+					</select>
+					<select class="item item-input item-select selectlabel nrm-fnt" ng-change="selectType()" id="event_type" ng-model="CreateEvent.event_type">
+						<option value="" ng-disabled="true" class="nrm-fnt">Event Type</option>
+						<option value="{{event_type[1]}}" class="nrm-fnt" ng-repeat="event_type in event_types" ng-if="event_types.length" ng-selected="(previousRecord.event_type && previousRecord.event_type == event_type[1]) || (!previousRecord.event_type && edit_activity_type && event_type[0] == edit_activity_type)||(!previousRecord.event_type && !edit_activity_type && event_type[0] == 'Game')">{{event_type[0]}}</option>
+					</select>
+					<label class="item item-input">
+						<input type="text" placeholder="Name" id="event_name"/>
+					</label>
+				</div>
+			</ion-item>
+			<ion-item>
+				<div class="list">
+					<label class="item item-input">
+						<span class="input-label nrm-fnt">Start Date</span>
+						<input type="date" id="start_date">
+					</label>
+					<label class="item item-input">
+						<span class="input-label"><span class="nrm-fnt">Start Time</span><span style="color:#999;" class="nrm-fnt"> (Optional)</span></span>
+						<input type="time" id="start_time">
+					</label>
+					<label class="item item-input">
+						<span class="input-label nrm-fnt">End Date</span>
+						<input type="date" id="end_date">
+					</label>
+					<label class="item item-input">
+						<span class="input-label"><span class="nrm-fnt">End Time</span><span style="color:#999;" class="nrm-fnt"> (Optional)</span></span>
+						<input type="time" id="end_time">
+					</label>
+				</div>
+			</ion-item>
+			<ion-item>
+				<div class="list">
+					<select class="item item-input item-select selectlabel nrm-fnt" ng-change="getLocationVenues()" id="location" ng-model="CreateEvent.location" ng-disabled="isLocationDisabled" >
+						<option value="" class="nrm-fnt">Location</option>
+						<option value="{{location.id}}" class="nrm-fnt" ng-repeat="location in locations" ng-if="locations.length" ng-selected="(previousRecord.location_id && previousRecord.location_id == location.id) || (!previousRecord.location_id && edit_location_id && edit_location_id == location.id)">{{location.name}}</option>
+						<option value="new" class="nrm-fnt" style="color:#0000FF;">Create a location</option>
+					</select>
+					<select class="item item-input item-select selectlabel nrm-fnt" ng-disabled="isDisabled" id="venue" ng-change="change_venue();" ng-model="CreateEvent.venue" style="position:relative;">
+						<option value="" class="nrm-fnt">Venue (Field,Court,etc)</option>
+						<option value="{{venue[1]}}" class="nrm-fnt" ng-repeat="venue in venues" ng-if="venues.length && venue[0] != 'TBD'" ng-selected="(previousRecord.venue_id && previousRecord.venue_id == venue[1]) || (!previousRecord.venue_id && edit_venue_id && edit_venue_id == venue[1])">{{venue[0]}}</option>
+						<option value="new" class="nrm-fnt" style="color:#0000FF;">Create a venue</option>
+					</select>
+					<div class="venue-loader"><img src="img/ajax-loader.gif"/></div>
+				</div>
+			</ion-item>
+			<ion-item>
+				<div class="list">
+					<div id="team_div">
+						<select class="item item-input item-select selectlabel nrm-fnt" id="team">
+							<option value="" ng-disabled="true" class="nrm-fnt">Team</option>
+							<option value="{{team[1]}}" class="nrm-fnt" ng-repeat="team in teams" ng-if="teams.length" ng-selected="(previousRecord.team && previousRecord.team == team[1]) || (!previousRecord.team && edit_home && edit_home == team[0])">{{team[0]}}</option>
+						</select>
+					</div>
+					<div id="home_visit_div">
+						<select class="item item-input item-select selectlabel nrm-fnt" id="home">
+							<option value="" ng-disabled="true" class="nrm-fnt">Home Team</option>
+							<option value="{{team[1]}}" class="nrm-fnt" ng-repeat="team in teams" ng-if="teams.length" ng-selected="(previousRecord.home_team && previousRecord.home_team == team[1]) || (!previousRecord.home_team && edit_home && edit_home == team[0])">{{team[0]}}</option>
+						</select>
+						<select class="item item-input item-select selectlabel nrm-fnt" id="visit">
+							<option value="" ng-disabled="true" class="nrm-fnt">Visiting Team</option>
+							<option value="{{team[1]}}" class="nrm-fnt" ng-repeat="team in teams" ng-if="teams.length" ng-selected="(previousRecord.visit_team && previousRecord.visit_team == team[1]) || (!previousRecord.visit_team && edit_visit && edit_visit == team[0])">{{team[0]}}</option>
+						</select>
+					</div>
+				</div>
+			</ion-item>
+			<ion-item>
+				<div class="list">	
+					<label class="item item-input">
+						<textarea placeholder="Details" style="height:150px;" id="detail"></textarea>
+					</label>		
+				</div>
+			</ion-item>
+			<ion-item>
+				<div class="list">
+					<div class="fl nrm-fnt" style="margin-top:4px;">Publish</div>
+					<div class="fr sche-tog">
+						<label class="toggle toggle-balanced">
+							<input type="checkbox" id="is_publish"/>
+							<div class="track">
+								<div class="handle"></div>
+							</div>
+						</label>
+					</div>
+					<div class="cb"></div>
+				</div>
+			</ion-item>
+			<ion-item>
+			<div class="mt10 mb10">
+				<button class="button button-full button-energized">
+					<span style="position:relative;">Save Event</span><span id="loader-span"><img src="img/ajax-loader.gif"/></span>
+				</button>
+			</div>
+		</ion-item>
+	</form>
+	</ion-scroll>
+	</ion-content>
+</ion-view>

@@ -1,0 +1,52 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content drag-content="false">
+		<ion-view view-title="News" ng-init="init()">
+			<ion-header-bar>
+				<div class="bar bar-header bar-dark login-header">
+					<button ng-click="toggleLeft()" class="button icon ion-navicon"></button>
+					<h1 class="title" style="text-align:center;">News</h1>	
+					<!--<button class="button" ng-click="postNews()">Post News</button> -->
+				</div>
+			</ion-header-bar>
+			<ion-content>
+				<ion-scroll direction="y" style="height:87vh;margin-top:10px;">
+					
+					<ion-item>
+						<button class="button button-full button-energized" ng-click="postSiteNews()">
+							Post News
+						</button>
+					</ion-item> 
+					
+					<ion-item ng-repeat="news in newslist" ng-click="view_detail({{news.id}});">
+						<div class="fl nrm-fnt" style="width:22%;" ng-if="news.has_media">
+							<img src="{{news.media[0].thumbnail_url}}" title="{{news.media[0].title}}" class="news-img"/>
+						</div>
+						<div class="fl nrm-fnt" style="width:22%;" ng-if="!news.has_media">
+							<img src="img/news1.png" class="news-img"/>
+						</div>
+						<div class="fr mt10" style="width:68%;margin-left:7px;">
+							<div class="fl" style="width:80%;">
+								<div class="fnt-bld fnt-clr" style="white-space: initial;margin-top: -15px;">
+									{{news.headline}}
+								</div>
+								<div class="nrm-fnt" style="color:#999;">{{news.date_time}}</div>
+							</div>
+							<div class="fr" style="width:20%;">
+								<div class="item-icon-right">
+									<i class="icon ion-ios-arrow-right"></i>
+								</div>
+							</div>
+							<div class="cb"></div>
+						</div>
+						<div class="cb"></div>
+					</ion-item>
+					<ion-item id="error_message" style="display:none;">
+	           			<div style="text-align:center;margin-top:10px;margin-bottom:10px;color:red;" class="nrm-fnt">There are currently no news available.</div>
+	        		</ion-item>
+					<ion-infinite-scroll on-infinite="LoadMore()" distance="1%" ng-if="!noMoreItemsAvailable"></ion-infinite-scroll>
+				</ion-scroll>
+			</ion-content>
+		</ion-view>
+	</ion-side-menu-content>
+</ion-side-menus>

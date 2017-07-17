@@ -1,0 +1,61 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+		<ion-view view-title="Team" ng-controller="SendMessageCtrl" ng-init="init()">
+			<ion-header-bar>
+				<div class="bar bar-header bar-dark login-header">
+					<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+					<h1 class="title" style="text-align:center;">Send a Message</h1>	
+				</div>
+			</ion-header-bar>
+			<ion-content class="scroll-content">
+				<ion-item>
+					<div class="mt10 mb10">
+						<div class="list">
+							<label class="item item-input">
+								<input type="text" placeholder="Subject">
+							</label>
+							<label class="item item-input">
+								<textarea placeholder="Message" ></textarea>
+							</label>
+						</div>
+					</div>
+				</ion-item>
+				<ion-item>
+					<div class="fnt-bld fnt-clr mb10">Send message to: </div>
+					<div class="mt10 mb10">
+						<div class="fl nrm-fnt">Coordinators</div>
+						<div class="fr sche-tog">
+							<label class="toggle toggle-balanced">
+								<input type="checkbox" class="chk-day" checked="checked" value="mon"/>
+								<div class="track">
+									<div class="handle"></div>
+								</div>
+							</label>
+						</div>
+						<div class="cb"></div>
+					</div>
+					<div class="mt10 mb10">
+						<div class="fl nrm-fnt">Roster Members</div>
+						<div class="fr sche-tog">
+							<label class="toggle toggle-balanced">
+								<input type="checkbox" class="chk-day" checked="checked" value="mon"/>
+								<div class="track">
+									<div class="handle"></div>
+								</div>
+							</label>
+						</div>
+						<div class="cb"></div>
+					</div>
+				</ion-item>
+				<ion-item>
+					<div class="mt10 mb10">
+						<button class="button button-full button-energized">
+							Send Message
+						</button>
+					</div>
+				</ion-item>
+			</ion-content>
+		</ion-view>	
+	</ion-side-menu-content>
+</ion-side-menus>

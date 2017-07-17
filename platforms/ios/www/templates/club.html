@@ -1,0 +1,113 @@
+<ion-view view-title="Club" ng-init="init()">
+	<!--ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<button ng-click="toggleLeft()" class="button icon ion-navicon"></button>
+			<h1 class="title" style="text-align:center;">Leaguer</h1>	
+		</div>
+	</ion-header-bar-->
+	<ion-content>
+		<ion-item class="bar bar-header bar-calm list-head mt20">
+			<div class="org-name title">{{orgTitle}}</div>
+		</ion-item>
+		<ion-scroll direction="y" style="height:90vh;">
+		<ion-item ng-click="openCalender();">
+			<div class="item-icon">
+				<span class="fl list-img"><img src="img/icons/1.png" style=""></span>
+				<span class="fl list-name"><p>My Schedule</p></span>
+				<span class="cb"></span>
+			</div>
+			<div class="item-icon-right">
+				<i class="icon ion-ios-arrow-right"></i>
+			</div>
+		</ion-item>
+		<ion-item ng-click="openRegistration()">
+			<div class="item-icon">
+				<span class="fl list-img"><img src="img/icons/6.png"></span>
+				<span class="fl list-name"><p>Programs & Registration</p></span>
+				<span class="cb"></span>
+			</div>
+			<div class="item-icon-right">
+				<i class="icon ion-ios-arrow-right"></i>
+			</div>
+		</ion-item>
+		<ion-item ng-click="openOrder()">
+			<div class="item-icon">
+				<span class="fl list-img"><img src="img/icons/5.png"></span>
+				<span class="fl list-name"><p class="fnt-bld">Make a payment/Order History</p></span>
+				<span class="cb"></span>
+			</div>
+			<div class="item-icon-right">
+				<i class="icon ion-ios-arrow-right"></i>
+			</div>
+		</ion-item>
+		<ion-item ng-click="GoNews()" id="site_news">
+			<div class="item-icon">
+				<span class="fl list-img"><img src="img/icons/4.png"></span>
+				<span class="fl list-name"><p class="fnt-bld">News</p></span>
+				<span class="cb"></span>
+			</div>
+			<div class="item-icon-right">
+				<i class="icon ion-ios-arrow-right"></i>
+				</div>
+		</ion-item> 
+		<ion-item ng-click="GoTeam()">
+			<div class="item-icon">
+				<span class="fl list-img"><img src="img/icons/3.png"></span>
+				<span class="fl list-name"><p class="fnt-bld">Teams & Team Payments</p></span>
+				<span class="cb"></span>
+			</div>
+			<div class="item-icon-right">
+				<i class="icon ion-ios-arrow-right"></i>
+			</div>
+		</ion-item>
+		<ion-item href="#/cart">
+			<div class="item-icon">
+				<span class="fl list-img"><img src="img/icons/2.png"></span>
+				<span class="fl list-name"><p class="fnt-bld">Cart(<span class="cart_count">{{cartCountVal}}</span>)</p></span>
+				<span class="cb"></span>
+			</div>
+			<div class="item-icon-right">
+				<i class="icon ion-ios-arrow-right"></i>
+			</div>
+		</ion-item>
+		<ion-item href="#/manage_schedule_list" id="manage_schedule">
+			<div class="item-icon">
+				<span class="fl list-img"><img src="img/icons/1.png"></span>
+				<span class="fl list-name"><p class="fnt-bld">Manage Schedule</p></span>
+				<span class="cb"></span>
+			</div>
+			<div class="item-icon-right">
+				<i class="icon ion-ios-arrow-right"></i>
+			</div>
+		</ion-item>
+		<ion-item ng-click="notifications()">
+			<div class="item-icon">
+				<span class="fl list-img"><img src="img/icons/10.png"></span>
+				<span class="fl list-name"><p>Notification Settings</p></span>
+				<span class="cb"></span>
+			</div>
+			<div class="item-icon-right">
+				<i class="icon ion-ios-arrow-right"></i>
+			</div>
+		</ion-item>
+		<ion-item ng-click="home()">
+			<div class="item-icon">
+				<span class="fl list-img"><img src="img/org.png"></span>
+				<span class="fl list-name"><p>My Organizations</p></span>
+				<span class="cb"></span>
+			</div>
+			<div class="item-icon-right">
+				<i class="icon ion-ios-arrow-right"></i>
+			</div>
+		</ion-item>
+		<ion-item ng-click="logout()">
+			<div class="item-icon">
+				<span class="fl list-img"><img src="img/exit.png"></span>
+				<span class="fl list-name"><p>Sign out</p></span>
+				<span class="cb"></span>
+			</div>
+		</ion-item>
+		<ion-item style="border-bottom: 1px solid #fff;padding-bottom:100px;"></ion-item>
+		</ion-scroll>
+	</ion-content>
+</ion-view>

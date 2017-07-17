@@ -1,0 +1,23 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+<ion-view view-title="News" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+			<h1 class="title" style="text-align:center;">Photo Accounts</h1>	
+		</div>
+	</ion-header-bar>
+	<ion-content class="scroll-content" style="margin-top:10px;">
+		<ion-scroll direction="y" class="TeamNewsAlbumScroll">
+			<ion-item ng-repeat="(key, Accounts) in AccountsdataMore" class="AccountCls" AccntId="{{Accounts.id}}">
+				<div class="fnt-bld">{{Accounts.name}}</div>
+				<div class="item-icon-right">
+					<i class="icon ion-ios-arrow-right"></i>
+				</div>
+			</ion-item>
+		</ion-scroll>
+	</ion-content>
+</ion-view>	
+</ion-side-menu-content>
+</ion-side-menus>

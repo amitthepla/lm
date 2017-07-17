@@ -1,0 +1,128 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+<ion-view view-title="Events" ng-controller="PostponeEventCtrl" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+			<h1 class="title" style="text-align:center;">Cancel/Postpone</h1>
+		</div>
+	</ion-header-bar>
+	<ion-content class="scroll-content">
+		<form name="ChangeEventActionForm" ng-submit="SubmitForm()">
+			<ion-item>
+				<p class="fnt-bld fnt-clr">Blue Jays @ Ravens</p>
+				<div class="list">
+					<div class="item item-input item-select">
+						<div class="input-label">
+							Select Action
+						</div>
+						<select ng-model="CanRescPostEve.eventAction" id="eventAction" ng-change="showSelectValue()" style="padding-bottom:15px;">
+							<option value="1" ng-selected="true">Reschedule</option>
+							<option value="2">Cancel</option>
+							<option value="3">Postpone</option>
+						</select>
+					</div>
+				</div>
+			</ion-item>
+				
+			<ion-item id="newDateTime">
+				<p class="fnt-bld fnt-clr">New Date & Time</p>
+				<div class="list">
+					<label class="item item-input" ng-click="selectStartDate()">
+						<span class="input-label">Start:</span>
+						<input type="text" ng-model="CanRescPostEve.start" id="start_date">
+					</label>
+					<label class="item item-input" ng-click="selectEndDate()">
+						<span class="input-label">End:</span>
+						<input type="text" ng-model="CanRescPostEve.end" id="end_date">
+					</label>
+				</div>
+			</ion-item>
+			
+			<ion-item>
+				<p class="fnt-bld fnt-clr">Notify</p>
+				<ul class="list">
+					<li style="height:10px"></li>
+					<li class="item item-toggle bdr">Coordinators
+						<label class="toggle toggle-balanced">
+						   <input type="checkbox" checked="checked" value="ord" class="recipient">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>
+					</li>
+					<li style="height:10px"></li>
+					<li class="item item-toggle bdr">Players
+						<label class="toggle toggle-balanced">
+						   <input type="checkbox" checked="checked" value="ply" class="recipient">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>
+					</li>
+					<li style="height:10px"></li>
+					<li class="item item-toggle bdr">Officials
+						<label class="toggle toggle-balanced">
+						   <input type="checkbox" checked="checked" class="recipient" value="ofc">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>
+					</li>
+					<li style="height:10px"></li>
+					<li class="item item-toggle bdr">Work Teams
+						<label class="toggle toggle-balanced">
+						   <input type="checkbox" checked="checked" class="recipient" value="wrk">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>
+					</li>
+				</ul>
+				<label class="item item-input" style="margin-left:7px;">
+					<textarea placeholder="Message(optional)" ng-model="CanRescPostEve.message"></textarea>
+				</label>
+			</ion-item>
+			<ion-item>
+				<p class="fnt-bld fnt-clr">Post to</p>
+				<ul class="list">
+					<li style="height:10px"></li>
+					<li class="item item-toggle bdr">News Feed
+						<label class="toggle toggle-balanced">
+						   <input type="checkbox" checked="checked" class="socialsite" value="nf">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>
+					</li>
+					<li style="height:10px"></li>
+					<li class="item item-toggle bdr">Facebook
+						<label class="toggle toggle-balanced">
+						   <input type="checkbox" checked="checked" class="socialsite" value="fb">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>
+					</li>
+					<li style="height:10px"></li>
+					<li class="item item-toggle bdr">Twitter
+						<label class="toggle toggle-balanced">
+						   <input type="checkbox" checked="checked" class="socialsite" value="twt">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>
+					</li>
+				</ul>
+			</ion-item>
+			<ion-item>
+				<button class="button button-full button-energized">
+					{{button_value}}
+				</button>
+			</ion-item>
+		</form>
+	</ion-content>
+</ion-view>	
+</ion-side-menu-content>
+</ion-side-menus>

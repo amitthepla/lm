@@ -1,0 +1,37 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+<ion-view view-title="Add Result" ng-init="init()" ng-controller="AddResultCtrl">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+			<h1 class="title" style="text-align:center;">Event Details</h1>	
+			<button class="button" ng-click="done()">Done</button>
+		</div>
+	</ion-header-bar>
+	<ion-content class="scroll-content">
+		<form name="AddScoreForm" ng-submit="addScore()">
+			<ion-item>
+				<div class="txtcen">
+					<p class="fnt-bld">Blue Jays @ Ravens</p>
+						<table id="score-tbl">
+							<tr class="result-tbl">
+								<td class="txtrig">
+									<label class="item item-input res-lab"><input type="text" class="res-txt" maxlength="4" ng-model="scoreDetail[0].away"></label>
+								</td>
+								<td class="txtlef" style="position:relative;">
+									<label class="item item-input res-lab"><input type="text" class="res-txt" maxlength="4" ng-model="scoreDetail[0].home"></label>
+									<div style="position: absolute; left: 80px; top: 15px;"><img src="img/add.png" ng-click="addrow()" style="cursor:pointer;width:30px;"></div>
+								</td>
+							</tr>
+						</table>				
+				</div>
+			</ion-item>
+			<ion-item>
+				<button class="button button-full button-energized">Save Scores</button>
+			</ion-item>
+		</form>
+	</ion-content>
+</ion-view>
+</ion-side-menu-content>
+</ion-side-menus>

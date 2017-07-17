@@ -1,0 +1,22 @@
+<ion-view view-title="Registration Option" ng-controller="RegistrationOptionCtrl" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+			<h1 class="title" style="text-align:center;">Registration Option</h1>	
+		</div>
+		</ion-header-bar>
+	<ion-content>
+		<ion-scroll direction="y" style="height:87vh;">
+			<ion-item ng-repeat="regOption in regOptions.registration_products" class="regopt-item mt10 mb10" ng-if="regOptions.on_sale_message != 'Registration Closed'" ng-click="RegisterProduct(regOption.id, regOption.name, regOption.price);">			
+				<div style="cursor:pointer;padding:20px;">
+					<div class="fl fnt-bld">{{regOption.name}}:</div>
+					<div class="fl ml10 nrm-fnt">${{regOption.price}} <span ng-if="regOption.open==false" style="color:#999;">(Sold Out)</span></div>
+					<div class="cb"></div>
+					<div class="item-icon-right">
+						<i class="icon ion-ios-arrow-right"></i>
+					</div>
+				</div>
+			</ion-item>
+		</ion-scroll>
+	</ion-content>
+</ion-view>

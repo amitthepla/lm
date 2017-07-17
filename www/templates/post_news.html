@@ -1,0 +1,119 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+		<ion-side-menu-content>
+			<ion-view view-title="Post News" ng-controller="PostNewsCtrl" ng-init="init()">
+				<ion-header-bar>
+					<div class="bar bar-header bar-dark login-header">
+						<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+						<h1 class="title" style="text-align:center;">Post News</h1>	
+					</div>
+				</ion-header-bar>
+				<ion-content class="scroll-content">
+					<ion-item>
+						<div class="fnt-bld fnt-clr">News</div>
+						<div class="mt10 mb10">
+							<div class="list">
+								<label class="item item-input">
+									<input type="text" placeholder="Headline*" id="headline" ng-model="PostNews.headline">
+								</label>
+								<label class="item item-input">
+									<textarea id="Details" ng-model="PostNews.details"></textarea>
+								</label>
+							</div>
+						</div>
+					</ion-item>
+					<ion-item>
+						<div class="fnt-bld fnt-clr">Photos</div>
+						<div class="mt10 mb10">
+							<div class="list">
+								<div class="item item-input item-select">
+									<div class="input-label">
+										Upload
+									</div>
+									<select style="padding-bottom:15px;" id="" ng-model="PostNews.uploadFile">
+										<option value="" ng-selected="true">Upload from this device</option>
+										<option value="">Select from Leaguer</option>
+										<option value="">Select Facebook Photos</option>
+										<option value="">Select Youtube Video</option>
+										<option value="">Select from Flickr</option>
+										<option value="">Select from Picasa</option>
+										<option value="">Select from Shutterfly</option>
+									</select>
+								</div>
+								<label class="item item-input">
+									<input type="file" placeholder="Select one or more photos" id="photos" ng-model="PostNews.photos">
+								</label>
+							</div>
+						</div>
+					</ion-item>
+					<ion-item>
+						<div class="fnt-bld fnt-clr">Add a link or write an article</div>
+						<div class="item item-input item-select">
+							<div class="input-label">
+								Select
+							</div>
+							<select style="padding-bottom:15px;" id="" ng-model="PostNews.article">
+								<option value="" ng-selected="true">No link or article</option>
+								<option value="">Link to a page on your website</option>
+								<option value="">Link to a team page</option>
+								<option value="">Enter a web address</option>
+								<option value="">Link to a file or image</option>
+								<option value="">Write an article</option>
+							</select>
+						</div>
+					</ion-item>
+					<ion-item>
+						<div class="fnt-bld fnt-clr">Post News To</div>
+						<div class="mt10 mb10">
+							<div class="fl nrm-fnt">News Feeds</div>
+							<div class="fr sche-tog">
+								<label class="toggle toggle-balanced">
+									<input type="checkbox" class="chk-day" checked="checked" value="mon"/>
+									<div class="track">
+										<div class="handle"></div>
+									</div>
+								</label>
+							</div>
+							<div class="cb"></div>
+						</div>
+						<div class="nrm-fnt div-btn" ng-click="selectFeeds()" style="margin: 30px 0px;">
+							<div class="fl" style="margin-top:5px;">Select News Feeds</div>
+							<div class="fr"><img src="img/right_arrow.png" style="height:30px;width:30px;"></div>
+							<div class="cb"></div>
+						</div>
+						<div class="mt10 mb10">
+							<div class="fl nrm-fnt">Facebook</div>
+							<div class="fr sche-tog">
+								<label class="toggle toggle-balanced">
+									<input type="checkbox" class="chk-day" checked="checked" value="mon"/>
+									<div class="track">
+										<div class="handle"></div>
+									</div>
+								</label>
+							</div>
+							<div class="cb"></div>
+						</div>
+						<div class="mt10 mb10">
+							<div class="fl nrm-fnt">Email and SMS (Text Msg)</div>
+							<div class="fr sche-tog">
+								<label class="toggle toggle-balanced">
+									<input type="checkbox" class="chk-day" checked="checked" value="mon"/>
+									<div class="track">
+										<div class="handle"></div>
+									</div>
+								</label>
+							</div>
+							<div class="cb"></div>
+						</div>
+					</ion-item>
+					<ion-item>
+						<div class="mt10 mb10">
+							<button class="button button-full button-energized">
+								Post News
+							</button>
+						</div>
+					</ion-item>
+				</ion-content>
+			</ion-view>	
+		</ion-side-menu-content>
+</ion-side-menus>

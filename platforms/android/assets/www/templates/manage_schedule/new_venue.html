@@ -1,0 +1,31 @@
+<ion-view view-title="New Venue" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="GoBack()"></a>
+			<h1 class="title" style="text-align:center;">New Venue</h1>	
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<div style="margin: 20px 25px;" class="fnt-bld fnt-clr" ng-if="location_name">{{location_name}}</div>
+		<ion-item>
+			<div class="list">
+				<label class="item item-input">
+					<input type="text" placeholder="Name*" ng-model="NewVenue.name">
+				</label>
+				<label class="item item-input">
+					<input type="text" placeholder="Abbreviation* (e.g. JFK-F1)" ng-model="NewVenue.abbr">
+				</label>
+				<label class="item item-input">
+					<textarea placeholder="Additional Info" style="height:100px;" ng-model="NewVenue.info"></textarea>
+				</label>
+			</div>
+		</ion-item>
+		<ion-item>
+			<div class="mt10 mb10">
+				<button class="button button-full button-energized" ng-click="save_venue();" ng-disabled="!NewVenue.name.length || !NewVenue.abbr.length">
+					<span style="position:relative;">Save Venue</span><span id="loader-span"><img src="img/ajax-loader.gif"/></span>
+				</button>
+			</div>
+		</ion-item>
+	</ion-content>
+</ion-view>

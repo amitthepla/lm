@@ -1,0 +1,33 @@
+<ion-view view-title="News Detail" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="GoBack()"></a>
+			<h1 class="title" style="text-align:center;">News Detail</h1>	
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<ion-scroll direction="y" style="height:87vh;">
+			<ion-item>
+				<div class="fnt-bld fnt-clr" style="white-space:normal;">{{NewsDetails.headline}}</div>
+				<div class="nrm-fnt mt10">{{NewsDetails.date_time}}</div>
+			</ion-item>
+		    <ion-item ng-if="NewsDetails.has_media">   
+		        <a class="item item-list-detail" style="border:none !important;padding:16px 0px;">
+		          <ion-scroll direction="x">
+		            <img ng-repeat="images in NewsDetails.media" ng-src="{{images.thumbnail_url}}" ng-click="showImages($index)" class="image-list-thumb" alt="{{images.title}}"/>
+		          </ion-scroll>
+		        </a>
+	        </ion-item>
+			<ion-item ng-if="NewsDetails.details != ''">
+				<div class="nrm-fnt" style="white-space:normal;" ng-bind-html="NewsDetails.details" id="news_detail"></div>
+			</ion-item>
+			<ion-item ng-if="NewsDetails.url != null">
+				<div class="nrm-fnt" style="white-space: initial;">
+					<div class="fl">Click link to view: </div>
+					<div class="fl" style="margin-left:5px;"><a  href="javascript:void(0);" id="url" ng-click="openUrl();">{{NewsDetails.url}}</a></div>
+					<div class="cb"></div>
+				</div>
+			</ion-item>
+		</ion-scroll>
+	</ion-content>
+</ion-view>

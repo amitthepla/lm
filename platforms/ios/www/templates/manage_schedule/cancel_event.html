@@ -1,0 +1,139 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+<ion-view view-title="Events" ng-controller="PostponeEventCtrl" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+			<h1 class="title" style="text-align:center;">Cancel/Postpone</h1>
+		</div>
+	</ion-header-bar>
+	<ion-content class="scroll-content">
+		<ion-item id="error_div" style="white-space: normal !important;">
+			<div class="nrm-fnt" id="payment_error"></div>
+		</ion-item>
+		<ion-scroll direction="y" style="height:87vh;">
+		<form name="ChangeEventActionForm" ng-submit="SubmitForm()">
+			<ion-item>
+				<p class="fnt-bld fnt-clr" ng-if="EventDetail.home_team != 'NA' && EventDetail.visiting_team != 'NA'">{{EventDetail.home_team}} @ {{EventDetail.visiting_team}}</p>
+				<p class="fnt-bld fnt-clr" ng-if="EventDetail.home_team != 'NA' && EventDetail.visiting_team == 'NA'">{{EventDetail.home_team}} ({{EventDetail.type}})</p>
+				<p class="fnt-bld fnt-clr" ng-if="EventDetail.home_team == 'NA' && EventDetail.visiting_team != 'NA'">{{EventDetail.visiting_team}} ({{EventDetail.type}})</p>
+				<div class="list">
+					<select id="eventAction" ng-change="showSelectValue()" ng-model="CanRescPostEve.eventAction" class="item item-input item-select selectlabel nrm-fnt">
+							<option value="" ng-disabled="true" class="nrm-fnt">Select</option>
+							<option value="postpone" ng-selected="true" class="nrm-fnt">Postpone</option>
+							<option value="reschedule" class="nrm-fnt">Reschedule</option>
+							<option value="cancel" class="nrm-fnt">Cancel</option>
+					</select>
+				</div>
+			</ion-item>
+				
+			<ion-item id="newDateTime">
+				<p class="fnt-bld">New Date & Time</p>
+				<div class="list">
+					<label class="item item-input">
+						<span class="input-label nrm-fnt">Start Date</span>
+						<input type="date" id="start_date">
+					</label>
+					<label class="item item-input">
+						<span class="input-label nrm-fnt">Start Time</span>
+						<input type="time" id="start_time">
+					</label>
+					<label class="item item-input">
+						<span class="input-label nrm-fnt">End Date</span>
+						<input type="date" id="end_date">
+					</label>
+					<label class="item item-input">
+						<span class="input-label nrm-fnt">End Time</span>
+						<input type="time" id="end_time">
+					</label>
+				</div>
+			</ion-item>
+			
+			<ion-item>
+				<p class="fnt-bld">Notify</p>
+				<ul class="list">
+					<li style="height:10px"></li>
+					<li class="item item-toggle bdr">Coordinators
+						<label class="toggle toggle-balanced">
+						   <input type="checkbox" checked="checked" class="recipient" id="coordinator">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>
+					</li>
+					<li style="height:10px"></li>
+					<li class="item item-toggle bdr">Players
+						<label class="toggle toggle-balanced">
+						   <input type="checkbox" checked="checked" class="recipient" id="players">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>
+					</li>
+					<li style="height:10px"></li>
+					<li class="item item-toggle bdr">Officials
+						<label class="toggle toggle-balanced">
+						   <input type="checkbox" checked="checked" class="recipient" id="officials">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>
+					</li>
+					<li style="height:10px"></li>
+					<li class="item item-toggle bdr">Work Teams
+						<label class="toggle toggle-balanced">
+						   <input type="checkbox" checked="checked" class="recipient" id="workteams">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>
+					</li>
+				</ul>
+				<label class="item item-input" style="margin-left:7px;">
+					<textarea placeholder="Message(optional)" ng-model="CanRescPostEve.message" id="message" style="height:100px;"></textarea>
+				</label>
+			</ion-item>
+			<ion-item>
+				<p class="fnt-bld">Post to</p>
+				<ul class="list">
+					<li style="height:10px"></li>
+					<li class="item item-toggle bdr">News Feed
+						<label class="toggle toggle-balanced">
+						   <input type="checkbox" class="socialsite" id="newsfeed" checked="checked">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>
+					</li>
+					<li style="height:10px"></li>
+					<li class="item item-toggle bdr">Facebook
+						<label class="toggle toggle-balanced">
+						   <input type="checkbox" class="socialsite" id="facebook">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>
+					</li>
+					<li style="height:10px"></li>
+					<li class="item item-toggle bdr">Twitter
+						<label class="toggle toggle-balanced">
+						   <input type="checkbox" class="socialsite" id="twitter">
+						   <div class="track">
+							 <div class="handle"></div>
+						   </div>
+						</label>
+					</li>
+				</ul>
+			</ion-item>
+			<ion-item>
+				<button class="button button-full button-energized" ng-disabled="isDisable">
+					<span style="position:relative;">{{button_value}}</span><span id="loader-span2"><img src="img/ajax-loader.gif"/></span>
+				</button>
+			</ion-item>
+		</form>
+		</ion-scroll>
+	</ion-content>
+</ion-view>	
+</ion-side-menu-content>
+</ion-side-menus>

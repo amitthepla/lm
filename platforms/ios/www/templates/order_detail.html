@@ -1,0 +1,102 @@
+<ion-view view-title="Order Details" ng-controller="OrderDetailCtrl" ng-init="init()">
+			<ion-header-bar>
+				<div class="bar bar-header bar-dark login-header">
+					<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+					<h1 class="title" style="text-align:center;">Order Details</h1>
+				</div>	
+			</ion-header-bar>
+			<ion-content>
+			<ion-scroll direction="y" style="height:87vh;" id="scroll_list" delegate-handle="small">
+				<ion-item id="success_div">
+					<div class="nrm-fnt" id="payment_success">
+						<div class="fnt-bld">Thank you for your order</div>
+						<div class="nrm-fnt">Your order was successfully processed.</div>
+					</div>
+				</ion-item>
+				<ion-item>
+					<div>
+						<div class="fl"  ng-style="orderType=='awaiting_payment' && orderDetail.show_payment_btn && {'width':'65%'} ||  orderType=='awaiting_payment' && !orderDetail.show_payment_btn && orderDetail.outstanding_balance_amount != '0.00' && {'width':'65%'} || {'width':'100%'}" >
+							<div class="fnt-bld">Order: {{orderDetail.business_id}}</div>
+							<div class="nrm-fnt">{{orderDetail.date}}</div>
+							<div class="nrm-fnt">Total: {{orderDetail.adjusted_price}}</div>
+						</div>
+						<div class="fr" style="width:35%;">
+							<div class="nrm-fnt" style="color:red;" ng-if="orderDetail.outstanding_balance_amount">{{orderDetail.payment_label}}: {{orderDetail.outstanding_balance_amount | currency}}</div>
+							<div class="mt10 order-head" ng-if="orderType == 'awaiting_payment' && orderDetail.show_payment_btn">
+								<button class="button button-full button-energized" ng-click="makePayment()" style="margin:0px !important">
+									Pay Now
+								</button>
+							</div>
+						</div>
+						<div class="cb"></div>
+					</div>
+					<div ng-repeat="regList in orderDetail.registrations">
+						<div class="fnt-bld mt10" style="white-space:pre-line;">{{regList.registration_product.activity}} <span style="color:#999 !important;margin-left:3px;" ng-if="regList.is_canceled">(Cancelled)</span></div>
+						<div class="nrm-fnt">Registration Product: {{regList.registration_product.human_team}}</div>
+						<div class="nrm-fnt">Price: {{regList.registration_product.price | currency}}</div>
+						<div>
+							<div class="nrm-fnt" style="color:red;" ng-if="regList.payment_options.show_outstanding_balance == true">Balance: ${{regList.payment_options.outstanding_balance}}</div>
+							<div class="nrm-fnt" ng-if="regList.payment_options.show_payment_due">{{regList.payment_options.outstanding_balance | currency}} due {{regList.payment_options.payment_due}}</div>
+						</div>
+						<div class="nrm-fnt" ng-if="regList.team.details.team_name">Team Name: {{regList.team.details.team_name}}</div>
+						<a href="javascript:void(0)" ng-click="showRegdInf({{regList.id}})" class="nrm-fnt" id="showRegLink_{{regList.id}}" ng-if="regList.participants.length || regList.team.details.rosters.length || regList.additional_information.length || regList.registrant || regList.team.details.coordinators.length || regList.emergency_contact" style="text-decoration:underline !important;color:#1E487E !important;">View all registration details</a>
+						<div id="RegInfDiv_{{regList.id}}" class="view-reg-inf">
+							<div class="nrm-fnt" ng-if="regList.registrant">
+								<div class="fnt-bld">Customer: </div>
+								<div>
+									{{regList.registrant.full_name}}&nbsp;({{regList.registrant.email}})
+								</div>
+							</div>
+							<div class="nrm-fnt" ng-if="regList.is_participating">
+								<div class="fnt-bld">Participant: </div>
+								<div class="">
+									{{regList.participants.full_name}} ({{regList.participants.email}})</br>
+									{{regList.participants.address}}</br>
+									{{regList.participants.city}}, {{regList.participants.state}} {{regList.participants.zip}}</br>
+									{{regList.participants.phone}}
+								</div>
+							</div>
+							<div class="nrm-fnt" ng-if="regList.team.details.rosters.length">
+								<div class="fnt-bld">Roster: </div>
+								<div ng-repeat="rosterRec in regList.team.details.rosters">
+									{{rosterRec.first_name}}&nbsp;{{rosterRec.last_name}}&nbsp;({{rosterRec.email}})
+								</div>
+							</div>
+							<div class="nrm-fnt" ng-if="regList.additional_information.length">
+								<div class="fnt-bld">Additional Information: </div>
+								<div ng-repeat="addInf in regList.additional_information" style="white-space:pre-line;">
+									{{addInf.field_name}}: {{addInf.field_value}}
+								</div>
+							</div>
+							<div class="nrm-fnt" ng-if="regList.team.details.coordinators.length">
+								<div class="fnt-bld">Coordinators: </div>
+								<div ng-repeat="coordinator in regList.team.details.coordinators">
+									{{coordinator.address}} ({{coordinator.role}})
+								</div>
+							</div>
+							<div class="nrm-fnt" ng-if="regList.emergency_contact">
+								<div class="fnt-bld">Emergency Contact: </div>
+								<div>
+									Full Name: {{regList.emergency_contact.full_name}}
+								</div>
+								<div>
+									Address: {{regList.emergency_contact.address}}
+								</div>
+								<div>
+									Phone: {{regList.emergency_contact.phone}}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div ng-repeat="prodList in orderDetail.product_line_items"> 
+						<div class="fnt-bld mt10">
+							{{prodList.product.title}} <span style="color:#999 !important;margin-left:3px;" ng-if="prodList.is_canceled">(Cancelled)</span>
+						</div>
+						<div class="nrm-fnt">Price: {{prodList.gross_price | currency}}</div>
+						<div class="nrm-fnt" style="color:red;" ng-if="prodList.payment_options.outstanding_balance != '0.0'">Balance: {{prodList.payment_options.outstanding_balance | currency}}</div>
+						<div class="nrm-fnt" ng-if="prodList.product.product_categories">Category: {{prodList.product.product_categories}}</div>
+					</div>
+				</ion-item>
+			</ion-scroll>
+			</ion-content>
+</ion-view>

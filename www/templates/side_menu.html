@@ -1,0 +1,64 @@
+<ion-content ng-controller="SideMenuCtrl" ng-init="init()">
+	
+	<ion-item class="bar bar-header bar-calm list-head mt20">
+		<div class="org-name title" ng-if="orgTitle">{{orgTitle}}</div>
+		<div class="org-name title" ng-if="!orgTitle">Leaguer</div>
+	</ion-item>
+    <ion-scroll direction="y" style="height:87vh;">
+	
+	<ion-item class="side-menu" ng-click="GoMySchedule()" ng-if="isVisible">
+		<div class="fl"><img src="img/icons/1.png" style="width:25px"></div>
+		<div class="fl ml10 nrm-fnt">My Schedule</div>
+		<div class="cb"></div>
+	</ion-item>
+	
+    <ion-item class="side-menu" ng-click="GoRegistration()" ng-if="isVisible">
+			<div class="fl"><img src="img/icons/6.png" style="width:25px"></div>
+			<div class="fl ml10 nrm-fnt">Registration</div>
+			<div class="cb"></div>
+	</ion-item>
+    
+    <ion-item class="side-menu" ng-click="GoOrderHistory()" ng-if="isVisible">
+			<div class="fl"><img src="img/icons/5.png" style="width:25px"></div>
+			<div class="fl ml10 nrm-fnt">Make a payment/Order History</div>
+			<div class="cb"></div>
+	</ion-item>
+    
+    <!--ion-item class="side-menu" ng-click="GoNews()" ng-if="isVisible">
+			<div class="fl"><img src="img/icons/4.png" style="width:25px"></div>
+			<div class="fl ml10 nrm-fnt">News</div>
+			<div class="cb"></div>
+	</ion-item>-->
+    
+    <ion-item class="side-menu" ng-click="GoTeam()" ng-if="isVisible">
+			<div class="fl"><img src="img/icons/3.png" style="width:25px"></div>
+			<div class="fl ml10 nrm-fnt">Teams and Team Payments</div>
+			<div class="cb"></div>
+	</ion-item>
+    
+    <ion-item class="side-menu" ng-click="GoCart()" ng-if="isVisible">
+			<div class="fl"><img src="img/icons/2.png" style="width:25px"></div>
+			<div class="fl ml10 nrm-fnt">Cart(<span class="cart_count">{{cartCountVal}}</span>)</div>
+			<div class="cb"></div>
+	</ion-item>
+    
+    <!--<ion-item class="side-menu" ng-click="GoManageSchedule()" ng-if="isVisible">
+			<div class="fl"><img src="img/icons/1.png" style="width:25px"></div>
+			<div class="fl ml10 nrm-fnt">Manage Schedule</div>
+			<div class="cb"></div>
+	</ion-item-->
+	
+    <ion-item class="side-menu" ng-click="home()" ng-if="isOrg">
+			<div class="fl"><img src="img/org.png" style="width:25px"></div>
+			<div class="fl ml10 nrm-fnt">My Organizations</div>
+			<div class="cb"></div>
+	</ion-item>
+	
+	<ion-item class="side-menu" ng-click="logout()">
+			<div class="fl"> <img src="img/exit.png" style="width:25px"> </div>
+			<div class="fl ml10 nrm-fnt">Sign out</div>
+			<div class="cb"></div>
+	</ion-item>
+	<!--ion-item class="side-menu" ng-if="isVisible" style="border-bottom: 1px solid #fff;"></ion-item-->
+	</ion-scroll>
+</ion-content>

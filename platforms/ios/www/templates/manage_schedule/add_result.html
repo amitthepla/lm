@@ -1,0 +1,43 @@
+<ion-view view-title="Add Result" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="GoBack()"></a>
+			<h1 class="title" style="text-align:center;">Enter Results</h1>	
+			<!-- <button class="button" ng-click="done()">Done</button> -->
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<ion-item class="warning-div">
+			<div class="nrm-fnt" id="warning"></div>
+		</ion-item>
+		<ion-scroll direction="y" style="height:87vh;">
+			<ion-item class="txtcen fnt-bld fnt-clr">
+				{{EventDetail.home_team}} @ {{EventDetail.visiting_team}}
+			</ion-item>
+			<form name="AddScoreForm" ng-submit="addScore()">
+				<ion-item style="border-top-color: #fff;">
+					<div class="txtcen">
+							<table id="score-tbl">
+								<tr class="result-tbl">
+									<td class="txtrig">
+										<label class="item item-input res-lab"><input type="text" pattern="[0-9]*" class="res-txt home-score" maxlength="4" id="scoreDetail_home_0" autocomplete="off"></label>
+									</td>
+									<td class="txtlef" style="position:relative;">
+										<label class="item item-input res-lab"><input type="text" pattern="[0-9]*" class="res-txt visit-score" maxlength="4" id="scoreDetail_away_0" autocomplete="off"></label>
+										<input type="hidden" id="remove_status_0" class="remove-status"/></div>
+									</td>
+									<input type="hidden" id="scoreDetail_id_0" class="score-id"/>
+								</tr>
+							</table>				
+					</div>
+				</ion-item>
+				<ion-item class="txtcen">
+					<button class="button button-positive" style="border-radius: 1px;" ng-click="addrow()">+ Add another score</button>
+				</ion-item>
+				<ion-item>
+					<button class="button button-full button-energized" ng-click="update_score();"><span>Save Scores</span><span id="loader-span"><img src="img/ajax-loader.gif"/></span></button>					
+				</ion-item>
+			</form>
+		</ion-scroll>
+	</ion-content>
+</ion-view>

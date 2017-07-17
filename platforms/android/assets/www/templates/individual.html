@@ -1,0 +1,318 @@
+<style>
+.selectlabel{
+	font-family: "OpenSans Normal" !important;
+    font-size: 14px !important;
+	color: #444;
+    padding: 11px 11px 11px 13px;
+}
+</style>
+
+<ion-side-menus> 
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+	<ion-view view-title="Individual Registration" ng-controller="IndividualCtrl" ng-init="init()">
+		<ion-header-bar>
+			<div class="bar bar-header bar-dark login-header">
+				<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+				<h1 class="title" style="text-align:center;">Register</h1>
+			</div>
+		</ion-header-bar>
+		
+		<ion-content class="scroll-content">
+		<ion-scroll direction="y" style="height:90vh;">
+			<form name="IndividualRegistrationForm">
+			<input type="hidden" name="" value="" class="isTeamSts" />
+			<input type="hidden" name="" value="" class="validSts" />
+			<input type="hidden" name="Editid" class="Editid" value="" />
+				<ion-item>
+					<div class="fnt-bld fnt-clr DisplayEventName">{{Eventname}}</div>
+					<div class="mt10">
+						<div class="regd-inf">
+							<div class="fl fnt-bld DisplayEventType">{{EventnameType}}:</div>
+							<div class="fl nrm-fnt ml10 DisplayEventPrice">${{EventnamePrice}}</div>
+							<div class="cb"></div>
+						</div>	
+					</div>
+					
+					<div class="mt10 DisplayPaymentOptions" style="display:none;">
+						<div class="fnt-bld">Payment Option<span style='font-weight:bold;color:#FF0000;margin-left:1px;'>*</span></div>
+						<div class="list">
+							<select id="payment_option" ng-change="selectPayOpt()" ng-model="IndReg.payOpt" class="item item-input item-select selectlabel">
+								<option value="">Select Payment Option</option>
+								<option value="{{key}}" ng-repeat="(key, PayOption) in AllPaymentOptions" ng-selected="key == 'online'">{{PayOption}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="mt10 DisplayWaitlistPayment" style="margin-left:10px;display:none;">
+						<div class="fnt-bld">Payment Option</div>
+						<div class="nrm-fnt">Waitlist Fee: ${{waitlistpayment}}</div>
+						<input type="hidden" class="paymentPriceAmt" value="waitlist" />
+					</div>
+					
+					<div id="payfulldiv" class="dspnon" style="margin-left:30px;">
+						<div class="mt10">
+							<div class="regd-inf">
+								<div class="fl fnt-bld">Online Payment Due:</div>
+								<div class="fl nrm-fnt ml10">${{onlinepaymentdue}}</div>
+								<div class="cb"></div>
+							</div>	
+						</div>
+					</div>
+					<div id="payplandiv" class="dspnon" style="margin-left:30px;">
+						<div class="mt10">
+							<div class="regd-inf">
+								<div class="fl fnt-bld">Deposit Amount:</div>
+								<div class="fl nrm-fnt ml10">${{plandepositeamnt}}</div>
+								<div class="cb"></div>
+							</div>	
+						</div>
+						<div class="mt10">
+							<div class="regd-inf">
+								<div class="fnt-bld">Payment Schedule:</div>
+								<div ng-repeat="paymentdue in paymentdues" style="margin-left:14px;">
+									<div class="fl nrm-fnt">{{paymentdue.payment_due}}: </div>
+									<div class="fl nrm-fnt ml10">${{paymentdue.deserve_amount}}</div>
+									<div class="cb"></div>
+								</div>
+								<div class="cb"></div>
+							</div>	
+							</div>
+					</div>
+				</ion-item>
+				<ion-item ng-if="totalData.registration_details.non_participation.valid==true">
+					<div class="fnt-bld fnt-clr">Will you be on the roster?<span style='font-weight:bold;color:#FF0000;margin-left:1px;'>*</span></div>
+					<div class="mt10 mb10">
+						<div class="list">
+							<select id="registration_participating_roster" name="registration[participating]" ng-change="selectRoster()" ng-model="IndReg.roster" class="item item-input selectlabel" style="display:block;" ng-if="totalData.registration_details.non_participation.valid==true">
+								<option value="">Please select roster option</option>
+								<option value="Yes" ng-selected="true">Yes</option>
+								<option value="No">No</option>
+							</select>
+						</div>	
+					</div>
+				</ion-item>
+				
+				<ion-item ng-if="totalData.registration_details.is_team==true">
+					<div class="fnt-bld fnt-clr">Team Name<span style='font-weight:bold;color:#FF0000;margin-left:1px;'>*</span></div>
+					<div class="mt10 mb10">
+						<div class="list">
+							<label class="item item-input">
+								<input type="text" placeholder="Team name" id="teamName" ng-model="IndReg.teamName">
+							</label>
+						</div>	
+					</div>
+				</ion-item>
+				
+				<ion-item class="DisplayTeamCustom" style="display:none;">
+					<div class="mt10 mb10">
+						<div class="list">
+							<div class="AllTeamCustomList"></div>
+						</div>	
+					</div>
+				</ion-item>	
+				
+	<!--			 ng-if="totalData.registration_details.non_participation.valid==false"-->
+				<div class="DisplayTheSection">
+				
+					<ion-item>
+						<div class="registerFor">
+							<div class="fnt-bld fnt-clr">Participant Information<span style='font-weight:bold;color:#FF0000;margin-left:1px;'>*</span></div>
+							<div class="mt10 mb10">
+								<div class="list">
+									<select id="register_option" ng-change="selectRegister()" ng-model="IndReg.register" class="item item-input selectlabel">
+										<option value="">Who are you registering?</option>
+										<option value="{{registerfor.value}}" ng-repeat="registerfor in totalData.registration_details.register_for.options" ng-selected="registerfor.value == 'customer'">{{registerfor.label}}</option>
+									</select>
+								</div>	
+							</div>
+						</div>	
+						<div id="exist_new_user1" class="dspnon1 nameDetails">
+							<div class="list">
+								<label class="item item-input">
+									<input type="hidden" name="personID" class="personID" value="" />
+									<input type="text" placeholder="First Name" id="firstName" ng-model="IndReg.firstName">
+								</label>
+								<label class="item item-input">
+									<input type="text" placeholder="Last Name" id="lastName" ng-model="IndReg.lastName">
+								</label>
+								
+								<select id="gender" ng-model="IndReg.gender" class="item item-input item-select selectlabel">
+									<option value="" selected disabled>Gender</option>
+									<option value="male">Male</option>
+									<option value="female">Female</option>
+								</select>
+								
+								<label class="item item-input">
+									<span class="input-label Displaydob" style="color: #aaa;">DOB</span>
+									<input type="date" id="birthDay" ng-model="IndReg.birthDay" ng-click="HidePlaceHolder();">
+									<!--<input placeholder="Birthdate" type="text"  ng-model="IndReg.birthDay"  onclick="(this.type='date')"  id="birthDay">-->
+									
+								</label>
+								<label class="item item-input">
+									<input type="text" placeholder="Email" id="email" ng-model="IndReg.email">
+									<input type="hidden" name="emailHiddenID" class="emailHiddenID" value="" />
+									<input type="hidden" name="emerEmailHiddenID" class="emerEmailHiddenID" value="" />
+									<input type="hidden" name="emerHiddenID" class="emerHiddenID" value="" />
+									<input type="hidden" name="register_for_id" class="register_id" value="" />
+								</label>
+								<!--<label class="item item-input">
+									<input type="text" placeholder="Phone" id="phone" ng-model="IndReg.phone">
+								</label>-->
+							</div>
+						</div>
+					</ion-item>
+					<ion-item class="AddressCls">
+						<div class="fnt-bld fnt-clr">Address</div>
+						<div class="list">
+							<label class="item item-input">
+								<input type="text" placeholder="Street" id="street" ng-model="IndReg.street">
+							</label>
+							<label class="item item-input">
+								<input type="text" placeholder="City" id="city" ng-model="IndReg.city">
+							</label>
+							<label class="item item-input">
+								<input type="text" placeholder="State" id="state" ng-model="IndReg.state">
+							</label>
+							<label class="item item-input">
+								<input type="text" placeholder="Zip" id="zip" ng-model="IndReg.zip">
+							</label>
+							<label class="item item-input">
+								<input type="text" placeholder="Phone" id="phone" ng-model="IndReg.phone">
+							</label>
+						</div>
+					</ion-item>
+					<ion-item class="AddInfos" ng-if="displayCustomFieldsStatus==2">
+						<div class="fnt-bld fnt-clr">Additional Information<span style='font-weight:bold;color:#FF0000;margin-left:1px;'>*</span></div>
+						<div class="list" style="margin-bottom:0px;" ng-if="totalData.registration_details.show_skill_level">
+							<select id="registration_skill_level" class="item item-input item-select selectlabel" name="registration[skill_level]">
+								<option value="">{{skillLevelLable}}</option>
+								<option ng-repeat="skilllist in skilllists" value="{{skilllist.trim()}}">{{skilllist.trim()}}</option>
+							</select>
+						</div>
+						<div class="list" style="margin-bottom:0px;" ng-if="totalData.registration_details.show_division">
+							<select id="registration_division" class="item item-input item-select selectlabel" name="registration[division]">
+								<option value="">{{DivisonLable}}</option>
+								<option ng-repeat="divisionist in divisionists" value="{{divisionist.trim()}}">{{divisionist.trim()}}</option>
+							</select>
+						</div>
+						<div class="list" style="margin-bottom:0px;" ng-if="totalData.registration_details.show_shirt_size">
+							<select id="registration_shirt_size" class="item item-input item-select selectlabel" name="registration[shirt_size]">
+								<option value="">{{ShirtSizeLable}}</option>
+								<option ng-repeat="shirtsizelist in shirtsizelists" value="{{shirtsizelist.trim()}}">{{shirtsizelist.trim()}}</option>
+							</select>
+						</div>
+						<div class="list" style="margin-bottom:0px;" ng-if="totalData.registration_details.show_short_size">
+							<select id="registration_short_size" class="item item-input item-select selectlabel" name="registration[short_size]">
+								<option value="">{{ShortSizeLable}}</option>
+								<option ng-repeat="shortsizelist in shortsizelists" value="{{shortsizelist.trim()}}">{{shortsizelist.trim()}}</option>
+							</select>
+						</div>
+						
+					</ion-item>
+				</div>	
+				
+				<ion-item class="displayCustomIndi">
+					<div class="AllCustomList"></div>
+				</ion-item>
+					
+				<div class="DisplayTheSection1">	
+					<ion-item class="EmergContact">
+						<div class="fnt-bld fnt-clr">Emergency Contact<span style='font-weight:bold;color:#FF0000;margin-left:1px;'>*</span></div>
+						<div class="list">
+							<label class="item item-input">
+								<input type="text" placeholder="First Name" id="emgFirstName" ng-model="IndReg.emgFirstName">
+							</label>
+							<label class="item item-input">
+								<input type="text" placeholder="Last Name" id="emgLastName" ng-model="IndReg.emgLastName">
+							</label>
+							<label class="item item-input">
+								<input type="text" placeholder="Email" id="emgEmail" ng-model="IndReg.emgEmail">
+							</label>
+							<label class="item item-input">
+								<input type="text" placeholder="Phone" id="emgPhone" ng-model="IndReg.emgPhone">
+							</label>
+						</div>
+					</ion-item>
+				</div>
+				
+				
+				<ion-item class="DisplayRosterAddForm" style="display:none;">
+					<div class="fnt-bld fnt-clr">Roster(email address)</div>
+					<div class="mt10 mb10">
+						<input type="hidden" name="totalRosterCount" class="totalRosterCount" value="{{totalRosterCount}}" />
+						<div class="list AddMoreRosterSection">
+	
+						</div>
+						<div>
+							<button class="button button-full AddRoster" ng-click="AddMoreRoster()">
+								<strong>+</strong> Add another roster member
+							</button>
+						</div>
+					</div>
+				</ion-item>
+				
+				<ion-item class="DisplayCoachAddForm" style="display:none;">
+					<div class="fnt-bld fnt-clr">Coaches/Captains/Managers</div>
+					<div class="mt10 mb10">
+						<input type="hidden" name="totalCoachCount" class="totalCoachCountdata" value="{{totalCoachCountdata}}" />
+						<div class="list AddMoreCoachSection">
+							<div>
+								<label class="item item-input">
+									<input type="text" id="registration_team_coordinators_attributes_0_person_attributes_emails_attributes_0_address" name="registration[team_coordinators_attributes][0][person_attributes][emails_attributes][0][address]" placeholder="Email Address">
+								</label>
+								<label class="item item-input">
+									<input type="text" id="registration_founder_role" name="registration[founder_role]" placeholder="Role">
+								</label>
+							</div>	
+						</div>
+						<div>
+							<button class="button button-full AddRoster" ng-click="AddMoreCoach()">
+								<strong>+</strong> Add more coaches/captains
+							</button>
+						</div>
+					</div>
+				</ion-item>
+				
+				
+				<ion-item>
+					<div class="fnt-bld fnt-clr">Additional Comments or requests</div>
+					<div class="list">
+						<label class="item item-input">
+							<textarea id="AddCom" class="AddComment" ng-model="IndReg.AddCom"></textarea>
+						</label>
+					</div>
+				</ion-item>
+				<ion-item id="waiver-content" style="display:none;">
+					<input type="hidden" name="cartid" id="backCartId" value="" />
+					<input type="hidden" name="cartregid" id="backCartRegId" value="" />
+					<div class="fnt-bld fnt-clr">Waiver/Release</div>
+					<div class="mt10 bt10 dspnon" id="beforeAccept">
+						<div><a class="tnc-link" ng-click="goTermsConditions();">Click here to review and agree to the terms and conditions.</a></div>
+					</div>
+					<div class="mt10 bt10 dspnon" id="afterAccept">
+						<div class="fl" style="width:5%;"><img style="width:20px;height:20px;" src="img/checkbox.png" id="tc_img"></div>
+						<div class="fl nrm-fnt" style="width:90%;padding-left:10px;white-space:normal;" id="Inf"></div>
+						<div class="cb"></div>
+					</div>
+				</ion-item>
+				<ion-item>
+					<div class="mt10 mb10">
+						<button class="button button-full button-energized AddToCartBtn" ng-click="submitIndReg();">
+							<span class="ContinueCls" style="display:none;">Continue</span>
+							<span class="AddToCls" style="display:none;">Add to Cart</span>
+						</button> <!--ng-disabled="isDisabled"-->
+						<div style="width:100%;text-align:center;display:none;" class="RegistrationLoader">
+							<img src="img/loader.gif" border="0"/>
+						</div>	
+					</div>
+				</ion-item>
+			</form>	
+		</ion-scroll>
+		</ion-content>
+	</ion-view>
+	
+	</ion-side-menu-content>
+</ion-side-menus>
+<div style="position:absolute;left:50%;top:50%;z-index:9;display:none;" class="DisplayLoaderBIG">
+ <img src="img/loader.gif" border="0"/>
+</div>

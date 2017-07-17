@@ -1,0 +1,80 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+		<ion-view view-title="Place Your Order" ng-controller="PlaceOrderCtrl" ng-init="init()">
+		<ion-header-bar>
+			<div class="bar bar-header bar-dark login-header">
+				<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+				<h1 class="title" style="text-align:center;">Place Your Order</h1>
+			</div>	
+		</ion-header-bar>
+		<ion-content class="scroll-content">
+			<ion-scroll direction="y" style="height:87vh;">
+			<ion-item id="error_div">
+				<div class="nrm-fnt" id="payment_error"></div>
+			</ion-item>
+			<ion-item>
+				<div class="fnt-bld fnt-clr" style="padding-top:5px;">Order Summary</div>
+			</ion-item>
+			<ion-item style="position:relative;">
+				<div class="mt10 mb10">
+					<div class="fl nrm-fnt">Items ({{cartItemCountss}})</div>
+					<div class="fr nrm-fnt">${{CartOrderTotal}}</div>
+					<div class="cb"></div>
+				</div>
+				<div class="mt10 mb10">
+					<div class="fl fnt-bld">Online Payment Due:</div>
+					<div class="fr nrm-fnt">${{OnlinePaymentDue}}</div>
+					<div class="cb"></div>
+				</div>
+				<div style="position:absolute;left:50%;top:33%;display:none;" class="LoaderOrder">
+					<img src="img/ajax-loader.gif" />
+				</div>
+			</ion-item>
+			<!--ion-item>
+				<div class="fnt-bld fnt-clr" style="padding-top:5px;">Payment Information</div>
+			</ion-item>
+			<ion-item>
+				<div class="fnt-bld mb10" style="padding-top:5px;">Payment Method</div>
+				<div ng-if="isError"> 
+					<div class="nrm-fnt mt10" ng-click="openPaymentMethod()">No payment methods added</div>
+					<div class="nrm-fnt mt10"><a href="#/payment_methods" style="padding:10px 0px;">Add a payment method</a></div>
+				</div>	
+				<div class="nrm-fnt" ng-if="isError == false" ng-click="openPaymentMethod()">{{activeCreditCard.card_type}} ending in {{activeCreditCard.last4}}</div>
+				<div class="item-icon-right" ng-click="openPaymentMethod()">
+					<i class="icon ion-ios-arrow-right"></i>
+				</div>
+			</ion-item-->
+			<ion-item>
+				<div class="fnt-bld fnt-clr">Payment Information</div>
+				<div id="payment_loader" style="display:none;">
+					<img src="img/ajax-loader.gif"/>
+				</div>
+				<div id="payment_inf" style="display:none;">
+					<div class="mt10" ng-click="openPaymentMethod(team_detail.id)" style="height:auto;">
+						<div>
+							<div class="fnt-bld">Payment Method</div>
+							<div> 
+								<div class="nrm-fnt mt10" style="color:red;" ng-if="isError">No payment method added.</div>
+								<div class="nrm-fnt" ng-if="!isError">{{activeCreditCard.card_type}} in {{activeCreditCard.last4}}</div>
+								<div class="item-icon-right">
+									<i class="icon ion-ios-arrow-right"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="nrm-fnt mt10" ng-click="addCreditCard();" ng-if="isError"><a href="javascript:void(0);" style="color:#0000FF;">Add a payment method</a></div>
+				</div>
+			</ion-item>
+			<ion-item>
+				<div class="mt10 mb10">
+					<button class="button button-full button-energized" ng-click="place_order(OnlinePaymentDue);"  ng-disabled="isDisabled">
+						<span style="position:relative;">Place Your Order</span><span id="loader-span2"><img src="img/ajax-loader.gif"/></span>
+					</button>
+				</div>
+			</ion-item>
+			</ion-scroll>
+		</ion-content>
+		</ion-view>	
+	</ion-side-menu-content>
+</ion-side-menus>

@@ -1,0 +1,49 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+<ion-view view-title="Results" ng-controller="DisplayResultCtrl" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+			<h1 class="title" style="text-align:center;">Event Details</h1>	
+			<button class="button" style="margin-left:3px;">Wed.Apr16</button>
+		</div>
+	</ion-header-bar>
+	<ion-content class="scroll-content">
+		<ion-item>
+			<div class="fnt-bld fnt-clr" style="height:30px;" id="event_name"></div>
+			<div style="height:30px;" class="nrm-fnt" id="event_venue"></div>
+			<div style="height:30px;" class="nrm-fnt" id="event_date"></div>
+		</ion-item>
+		<ion-item>
+			<div class="fnt-bld" style="height:30px;" id="schedule_name"></div>
+			<div style="height:30px;" class="nrm-fnt" id="schedule_type"></div>
+		</ion-item>
+		<ion-item>
+			<div class="fnt-bld fnt-clr">Results</div>
+			<div id="score_list">
+				<div class="score-div">
+					<div class="fl">BLUE JAYS</div>
+					<div class="fr">3</div>
+					<div class="cb"></div>
+				</div>
+				<div class="score-div">
+					<div class="fl">RAVENS</div>
+					<div class="fr">5</div>
+					<div class="cb"></div>
+				</div>
+				<div style="height:3px;"></div>
+			</div>
+		</ion-item>
+		<ion-item>
+			<div class="fnt-bld fnt-clr" id="details">Details</div>
+			<div class="list">
+				<label class="item item-input">
+					<textarea></textarea>
+				</label>
+			</div>
+		</ion-item>
+	</ion-content>
+</ion-view>
+</ion-side-menu-content>
+</ion-side-menus>

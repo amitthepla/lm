@@ -1,0 +1,64 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+		<ion-view view-title="Roster" ng-init="init()">
+			<ion-header-bar>
+				<div class="bar bar-header bar-dark login-header">
+					<a class="button icon-left ion-chevron-left button-clear" ng-click="GoBack()"></a>
+					<h1 class="title" style="text-align:center;">Roster</h1>	
+				</div>
+			</ion-header-bar>
+			<ion-content class="scroll-content" style="margin-top:7px;">
+				<ion-scroll direction="y" style="height:88vh;">
+				<ion-item style="background-color:#ddd;">
+					<div class="fnt-bld fnt-clr" style="position:relative;">{{TeamName}} Coordinators</div>
+					<div class="" ng-if="may_add_coordinator" ng-click="addCoordinator();" style="position: absolute;margin-top: -24px;right: 20px;"><img src="img/plus.png" style="height:30px;width:30px;"/></div>
+				</ion-item>
+				<div ng-repeat="Coordinator in Coordinators">
+					<ion-item>
+						<div class="fnt-bld mb10" style="color:#EF8C3A">{{Coordinator.role}}</div>
+						<div class="fnt-bld mt10 mb10">{{Coordinator.name}}</div>
+						<div class="nrm-fnt">{{Coordinator.email}}</div>
+					</ion-item>
+				</div>
+				<div style="display:none;text-align:center;height:45px;padding:20px;" id="load_coordinate">
+					<img src="img/ajax-loader.gif"/>
+				</div>
+				<div style="display:none;height:45px;padding:20px;color:red;" id="no_coordinate" class="nrm-fnt">
+					No coordinator available.
+				</div>
+				<!-- <ion-item style="margin-top:0px;border:none;" ng-if="may_add_coordinator">
+					<div class="mt10">
+						<button class="button button-full button-energized" ng-click="addCoordinator();">
+							Add a coordinator
+						</button>
+					</div>
+				</ion-item> -->
+				<ion-item style="background-color:#ddd;">
+					<div class="fnt-bld fnt-clr" style="position:relative;">{{TeamName}} Roster</div>
+					<div class="" ng-if="may_add_to_roster" ng-click="addPlayer();" style="position: absolute;margin-top: -24px;right: 20px;"><img src="img/plus.png" style="height:30px;width:30px;"/></div>
+				</ion-item>
+				<div ng-repeat="Player in rosters">
+					<ion-item>
+						<div class="fnt-bld">{{Player.name}}</div>
+						<div class="nrm-fnt">{{Player.email}}</div>
+					</ion-item>
+				</div>
+				<div style="display:none;height:45px;padding:20px;color:red;" id="no_rosters" class="nrm-fnt">
+					No roster available.
+				</div>
+				<div style="display:none;text-align:center;height:45px;padding:20px;" id="load_roster">
+					<img src="img/ajax-loader.gif"/>
+				</div>
+				<!-- <ion-item style="margin-top:17px;border:none;" ng-if="may_add_to_roster">
+					<div class="mt10">
+						<button class="button button-full button-energized" ng-click="addPlayer();">
+							Add a player to roster
+						</button>
+					</div>
+				</ion-item> -->
+				</ion-scroll>
+			</ion-content>
+		</ion-view>	
+	</ion-side-menu-content>
+</ion-side-menus>

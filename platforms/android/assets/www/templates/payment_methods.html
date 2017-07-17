@@ -1,0 +1,64 @@
+<ion-view view-title="Payment Methods" ng-init="init()">
+	<ion-header-bar>
+			<div class="bar bar-header bar-dark login-header">
+				<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+				<h1 class="title" style="text-align:center;">Payment Methods</h1>
+			</div>	
+		</ion-header-bar>
+		<ion-content ng-controller="PaymentMethodsCtrl">
+          <ion-scroll direction="y" style="height:90vh;" delegate-handle="small">
+			<ion-item>
+				<div class="fnt-bld fnt-clr" style="padding-top:5px;">Payment Methods</div>
+			</ion-item>
+			<!-- <div ng-repeat="PaymentMethod in PaymentMethods">
+				<ion-item id="{{PaymentMethod.id}}" class="credit-card" ng-class="{activecard: PaymentMethod.is_active}" style="position:relative;">
+					<div class="fl" ng-click="selectCard(PaymentMethod.id)" style="width:95%;">
+						<div class="fnt-bld" style="padding-top:5px;">{{PaymentMethod.card_type}} Ending in {{PaymentMethod.last4}}</div>
+						<div class="nrm-fnt">{{PaymentMethod.user_name}}</div>
+						<div class="nrm-fnt">Expires: {{PaymentMethod.expiration_month}}/{{PaymentMethod.expiration_year}}</div>
+					</div>
+					<div class="fr mt20" style="position:absolute;right:10px;width:5%;" id="dlt_{{PaymentMethod.id}}" ng-click="deleteCard(PaymentMethod.id)">
+						<img src="img/remove.png"/>
+					</div>
+                    <div class="cb"></div>
+				</ion-item>
+			</div>-->
+		
+			<ion-list show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe" class="credit-list">
+				<div ng-repeat="PaymentMethod in PaymentMethods" on-finish-render="ngRepeatFinished">
+					<ion-item class="item-thumbnail-left credit credit-card" id="{{PaymentMethod.id}}">
+						<div ng-click="selectCard(PaymentMethod.id)" style="margin:10px;">
+							<div class="fnt-bld" style="padding-top:5px;">{{PaymentMethod.card_type}} Ending in {{PaymentMethod.last4}}</div>
+								<div class="nrm-fnt">{{PaymentMethod.user_name}}</div>
+								<div class="nrm-fnt">Expires: {{PaymentMethod.expiration_month}}/{{PaymentMethod.expiration_year}}
+							</div>
+						</div>
+						<ion-option-button class="button-info" style="background-color: #cceeff;" id="dlt_{{PaymentMethod.id}}" ng-click="deleteCard(PaymentMethod.id)">
+							<img src="img/remove.png"/>
+						</ion-option-button>
+					</ion-item>
+				</div>
+			</ion-list>
+			
+			<ion-item ng-if="isError">
+				<div class="nrm-fnt" style="color:red;">No payment methods have been added.</div>
+			</ion-item>
+			<ion-item ng-click="addCreditCard();">
+				<div class="nrm-fnt"><a href="javascript:void(0);" style="color:#0000FF;">Add a new credit card</a></div>
+				<div class="item-icon-right">
+					<i class="icon ion-ios-arrow-right"></i>
+				</div>
+			</ion-item>
+			<ion-item>
+				<div class="mt10 mb10">
+					<button class="button button-full button-energized" ng-click="continuePayment();">
+						<span>Continue</span><span id="loader-span"><img src="img/ajax-loader.gif"/></span>
+					</button>
+				</div>
+			</ion-item>
+			
+			
+			
+		</ion-scroll>
+		</ion-content>
+		</ion-view>

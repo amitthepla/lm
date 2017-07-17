@@ -1,0 +1,47 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+<ion-view view-title="Registration" ng-controller="RegistrationCtrl" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<button ng-click="toggleLeft()" class="button icon ion-navicon"></button>
+			<h1 class="title" style="text-align:center;">Programs({{count}})</h1>	
+			<button class="button icon-left" ng-click="filterRegd();" style="border-color:#444 !important;"><img src="img/gear.png" style="width:25px;margin-top:3px;"/></button>
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<ion-scroll direction="y" style="height:90vh;">
+			<ion-item ng-repeat="program in programs">		
+				<div class="regd-cont">
+					<div class="fl wid-75">
+						<div class="regd-inf" ng-click="showDetail('{{program.id}}')">
+							<div class="fnt-bld" style="white-space:pre-line"><span class="fnt-clr">{{program.title}}</span> <span ng-if="program.on_sale_message == 'Registration Closed'" style="color:#999;">(Sold Out)</span></div>
+							<div><span ng-if="activity_start != ''">{{program.activity_start}}</span><span ng-if="activity_end != ''"> - {{program.activity_end}}</span></div>
+						</div>
+						<div ng-if="program.address.name">
+						<div class="nrm-fnt" ng-if="program.address.map_address != ''" ng-click="showLocation('{{program.address.map_address}}');" style="color:#0000FF;white-space:normal;word-wrap: break-word;">{{program.address.name}}</div>
+						
+						<div class="nrm-fnt" ng-if="program.address.map_address == ''" style="white-space:normal;word-wrap: break-word;">{{program.address.name}}</div>
+						</div>
+					</div>
+					<div class="fr" style="position:relative;height:65px" ng-click="showDetail('{{program.id}}')">
+						<div class="item-icon-right">
+							<i class="icon ion-ios-arrow-right"></i>
+						</div>
+						<div class="cb"></div>
+					</div>
+					<div class="cb"></div>
+				</div>
+				<div class="cb" style="height:10px;"></div>
+				<button class="button button-full button-energized" ng-click="registerNow('{{program.id}}')" ng-if="program.on_sale_message != 'Registration Closed'">
+					Register Now
+				</button>
+			</ion-item>
+			<ion-item ng-if="isMessage">
+				<div style="text-align:center;color:red;" class="nrm-fnt">No data found.</div>
+			</ion-item>
+		</ion-scroll>
+	</ion-content>
+</ion-view>	
+</ion-side-menu-content>
+</ion-side-menus>

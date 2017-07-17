@@ -1,0 +1,26 @@
+<ion-view view-title="Photos" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="GoBack()"></a>
+			<h1 class="title" style="text-align:center;">Photos</h1>	
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<ion-scroll direction="y" style="height:87vh;" ng-if="photos.length">
+			<div style="height:10px;"></div>
+			<div ng-repeat="photo in photos">
+				<div style="height:55px;background-color:#ddd;padding: 7px 10px 0px;" ng-if="photo.is_album != null">
+					<div class="fnt-bld fnt-clr">{{photo.album_name}}</div>
+					<div style="color:#999;font-size:12px;">
+						<span>{{photo.created_by}}, {{photo.created_at}}</span>
+						</span gn-if="photo.updated_at != ''">{{photo.updated_at}}</span>
+					</div>
+				</div>
+				<ion-gallery ion-gallery-items="photo.media"></ion-gallery>
+			</div>
+		</ion-scroll>
+		<ion-item style="color:red;text-align: center;display:none;" id="error">
+			<div class="nrm-fnt">No photos available.</div>
+		</ion-item>
+	</ion-content>
+</ion-view>

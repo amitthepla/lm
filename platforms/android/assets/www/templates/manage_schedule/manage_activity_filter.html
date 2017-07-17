@@ -1,0 +1,42 @@
+<style>
+	.activity-type-div{padding:10px;font-weight:bold;border:2px solid #ddd;}
+</style>
+<ion-view view-title="Schedules" ng-init="init()">
+    <ion-header-bar>
+        <div class="bar bar-header bar-dark login-header">
+			<!--button ng-click="toggleLeft()" class="button icon ion-navicon"></button-->
+            <h1 class="title" style="text-align:center;">Calendars</h1>
+            <button class="button" ng-click="showActivity();">Done</button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <ion-item id="btn_content"></ion-item>
+        <ion-scroll direction="y" style="height:90vh;">
+            <div ng-repeat="(key, value) in schedules | groupBy: 'type'" on-finish-render="ngRepeatFinished">
+				<div class="activity-type-div">{{value[0]['type']}}</div>
+				<ion-item ng-repeat="activity in value" class="schedule_listing" >
+					<a class="fl">{{activity.title}}</a>
+					<div class="fr sche-tog">
+						<label class="toggle toggle-balanced" ng-if="isFilter == 1">
+							<input type="checkbox" class="chk-schedule" ng-click="check_schedule()" value="{{activity.id}}"/>
+								<div class="track">
+									<div class="handle"></div>
+								</div>
+						</label>
+						<label class="toggle toggle-balanced" ng-if="isFilter == 0">
+							<input type="checkbox" class="chk-schedule" ng-click="check_schedule()" value="{{activity.id}}" checked="checked"/>
+								<div class="track">
+									<div class="handle"></div>
+								</div>
+						</label>
+					</div>
+					<div class="cb"></div>
+				</ion-item>
+            </div>
+            <ion-item ng-if="isMessage">
+                <div style="text-align:center;color:red;" class="nrm-fnt">There is no activity available.</div>
+            </ion-item>
+            <ion-item style="border-bottom: 1px solid #fff;padding-bottom:120px;"></ion-item>
+		</ion-scroll>
+    </ion-content>
+</ion-view>

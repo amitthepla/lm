@@ -1,0 +1,131 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+		<ion-view view-title="Events" ng-controller="CreateEventCtrl" ng-init="init()">
+		<ion-header-bar>
+			<div class="bar bar-header bar-dark login-header">
+				<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+				<h1 class="title" style="text-align:center;">Create Event</h1>	
+			</div>
+		</ion-header-bar>
+			<ion-content class="scroll-content">
+				<ion-item>
+					<div class="list">
+						<label class="item item-input item-select">
+							<div class="input-label">
+								Type
+							</div>
+							<select>
+							  <option value="other">Other</option>
+							  <option value="practise">Practise</option>
+							  <option value="tournament">Tournament</option>
+							  <option value="game">Game</option>
+							  <option value="scrimmage">Scrimmage</option>
+							  <option value="playoff">Playoff</option>
+							</select>
+						</label>
+						<label class="item item-input">
+							<input type="text" placeholder="Name">
+						</label>
+					</div>
+				</ion-item>
+				<ion-item>
+					<div class="list">
+						<label class="item item-input fl" style="width:45%;">
+							<input type="text" placeholder="Start Date" id="start_date" readonly>
+						</label>
+						<label class="item item-input fl" style="width:45%;margin-left:10px;">
+							<input type="text" placeholder="Time" id="start_time" readonly>
+						</label>
+						<span class="cb"></span>
+						<label class="item item-input fl" style="width:45%;">
+							<input type="text" placeholder="End Date" id="end_date" readonly>
+						</label>
+						<label class="item item-input fl" style="width:45%;margin-left:10px;" readonly>
+							<input type="text" placeholder="Time" id="end_time">
+						</label>
+						<span class="cb"></span>
+					</div>
+				</ion-item>
+				<ion-item>
+					<div class="list">
+						<label class="item item-input item-select">
+							<div class="input-label">
+								Location
+							</div>
+							<select id="location">
+								<option value="">Select</option>
+								<option value="new">New Location</option>
+							</select>
+						</label>
+						<label class="item item-input item-select">
+							<div class="input-label">
+								Venue(Field,Court)
+							</div>
+							<select id="venue">
+								<option value="">Select</option>
+								<option value="new">New Venue</option>
+							</select>
+						</label>
+					</div>
+				</ion-item>
+				<ion-item>
+					<div class="list">
+						<label class="item item-input item-select">
+							<div class="input-label">
+								Team
+							</div>
+							<select>
+							  <option value="">Select</option>
+							</select>
+						</label>
+						<label class="item item-input item-select">
+							<div class="input-label">
+								Home
+							</div>
+							<select>
+							  <option value="">Select</option>
+							</select>
+						</label>
+						<label class="item item-input item-select">
+							<div class="input-label">
+								Visiting
+							</div>
+							<select>
+							  <option value="">Select</option>
+							</select>
+						</label>
+					</div>
+				</ion-item>
+				<ion-item>
+					<div class="list">
+						<div class="mb10">
+							<label class="item item-input">
+								<textarea placeholder="Details"></textarea>
+							</label>
+						</div>
+						<div class="mt10">
+							<div class="fl nrm-fnt">Publish</div>
+							<div class="fr sche-tog">
+								<label class="toggle toggle-balanced">
+									<input type="checkbox" checked="checked"/>
+									<div class="track">
+										<div class="handle"></div>
+									</div>
+								</label>
+							</div>
+							<div class="cb"></div>
+						</div>	
+					</div>
+				</ion-item>
+				<ion-item>
+				<div class="mt10 mb10">
+					<button class="button button-full button-energized">
+						Save Event
+					</button>
+				</div>
+			</ion-item>
+			</ion-content>
+		</ion-view>	
+	</ion-side-menu-content>
+</ion-side-menus>

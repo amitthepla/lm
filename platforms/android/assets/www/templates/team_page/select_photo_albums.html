@@ -1,0 +1,33 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+<ion-view view-title="News" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+			<h1 class="title" style="text-align:center;">Albums</h1>	
+		</div>
+	</ion-header-bar>
+	<ion-content class="scroll-content" style="margin-top:10px;">
+		<ion-scroll direction="y" class="TeamNewsAlbumScroll">
+			<div ng-repeat="(key, Albums) in AlbumsdataMore" style="position:relative;width:100%;">
+				<div style="position:absolute;top:17px;left:19px;z-index:999;"><input type="radio" name="AlbumRad" class="RadioAlbum" value="{{Albums.name}}" AlbumId="{{Albums.id}}" ImgUrl="{{Albums.image_url}}" ThumbNailUrl="{{Albums.thumbnail_url}}"/></div>
+				<ion-item>
+					<div class="fnt-bld" style="margin-left:27px;white-space:initial;width:80%;">{{Albums.name}}</div>
+					<div class="item-icon-right AlbumCls" AlbumId="{{Albums.id}}" style="width:20%">
+						<i class="icon ion-ios-arrow-right"></i>
+					</div>
+				</ion-item>
+			</div>
+			<div class="NoAlbumFound" style="display:none;">
+			</div>
+		</ion-scroll>
+	</ion-content>
+	<div style="display:none;bottom:10px;width:100%;position:absolute;" class="DisplayAlbumSelectButton">
+		<button class="button button-full button-energized" id="SelectSelectAlbum">
+			Select Album
+		</button>
+	</div>
+</ion-view>	
+</ion-side-menu-content>
+</ion-side-menus>

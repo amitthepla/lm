@@ -1,0 +1,25 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+<ion-view view-title="News Detail" ng-controller="NewsDetailCtrl" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+			<h1 class="title" style="text-align:center;">News Detail</h1>	
+		</div>
+	</ion-header-bar>
+	<ion-content class="scroll-content">
+		<ion-item>
+			<div class="fnt-bld fnt-clr" style="white-space:normal;">{{NewsDetail.heading}}</div>
+			<div style="font-size:12px;">{{NewsDetail.post_date}}</div>
+		</ion-item>
+		<ion-item>
+		<div style="text-align:center;"><img src="img/news/{{NewsDetail.image}}"/></div>
+		</ion-item>
+		<ion-item>
+			<div class="nrm-fnt" style="white-space:normal;">{{NewsDetail.details}}</div>
+		</ion-item>
+	</ion-content>
+</ion-view>	
+</ion-side-menu-content>
+</ion-side-menus>

@@ -1,0 +1,64 @@
+<style>
+	#search_icon{display: none;}
+</style>
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+<ion-view view-title="Registration" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<button ng-click="toggleLeft()" class="button icon ion-navicon" style="display:none;" id="menu_icon"></button>
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="GoBack()" style="display:none;" id="back_icon"></a>
+			<h1 class="title" style="text-align:center;font-size: 15px;">All Programs and Activities</h1>	
+			<button class="button icon-left" ng-click="filterRegd();" style="border-color:#444 !important;" id="search_icon"><img src="img/search.png" style="width:25px;margin-top:3px;"/></button>
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<div class="tab-menu">
+			<div class="fl tab" id="all_activity" ng-click="show_all_Activity();">All Activities</div>
+			<div class="fl tab" id="filter_activity" ng-click="show_filter_activity();">Activities by Type</div>
+			<div class="cb"></div>
+		</div>
+		<div style="height:45px;"id='main_content_ion'></div>
+		<ion-scroll direction="y" style="height:90vh;" delegate-handle="small">
+			<div id="program_div" style="display:none;">
+				<ion-item ng-repeat="program in programs">
+					<div class="fl order-head" style="width:63%;padding-right:5px;" ng-click="showDetail('{{program.id}}')">
+						<div class="fnt-bld" style="white-space:initial">{{program.title}}</div>
+						<div class="nrm-fnt"><span ng-if="activity_start != ''">{{program.activity_start}}</span><span ng-if="activity_end != ''"> - {{program.activity_end}}</span></div>
+						<div ng-if="program.address.name">
+							<div class="nrm-fnt" ng-if="program.address.map_address != ''" ng-click="showLocation('{{program.address.map_address}}');" style="color:#0000FF;white-space:normal;word-wrap: break-word;">{{program.address.name}}</div>
+							
+							<div class="nrm-fnt" ng-if="program.address.map_address == ''" style="white-space:normal;word-wrap: break-word;">{{program.address.name}}</div>
+						</div>
+					</div>
+					<div class="fr order-head" style="width:35%;">
+						<button class="button button-full button-energized" ng-click="registerNow('{{program.id}}')" ng-if="program.is_registration_button" style="margin:0px !important">
+							Register
+						</button>
+						<button class="button button-stable" ng-if="program.on_sale_message == 'Registration Closed'" ng-disabled="true">
+	  						Sold Out
+						</button>
+					</div>
+					<div class="cb"></div>
+				</ion-item>
+				<ion-item ng-if="isMessage">
+					<div style="text-align:center;color:red;" class="nrm-fnt">There are no programs available.</div>
+				</ion-item>
+			</div>
+			<div id="program_type_div" style="display:none;">
+				<ion-item ng-repeat="progType in progTypes" ng-click="show_selected_program({{progType.activity_id}});">
+					<div class="fl fnt-bld" style="width: 95%;">{{progType.activity_type}}</div>
+					<div class="fr"><i class="icon ion-chevron-right icon-accessory"></i></div>
+					<div class="cb"></div>
+				</ion-item>
+				<ion-item ng-if="isNoType">
+					<div style="text-align:center;color:red;" class="nrm-fnt">There are no activity type available.</div>
+				</ion-item>
+			</div>
+			<ion-item style="border-bottom: 1px solid #fff;padding-bottom:30px;"></ion-item>
+		</ion-scroll>
+	</ion-content>
+</ion-view>	
+</ion-side-menu-content>
+</ion-side-menus>

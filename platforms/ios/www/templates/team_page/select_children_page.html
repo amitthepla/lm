@@ -1,0 +1,43 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+<ion-view view-title="News" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+			<h1 class="title" style="text-align:center;">Select Page</h1>	
+		</div>
+	</ion-header-bar>
+	<ion-content class="scroll-content" style="margin-top:10px;">
+		<ion-scroll direction="y" class="TeamNewsAlbumScroll">
+		
+			
+			<div ng-repeat="(key, ChildLinks) in ChildLinksdataMore" style="position:relative;width:100%;">
+				<div style="position:absolute;top:17px;left:19px;z-index:999;"><input type="radio" name="ChildLinksRad" class="ChildLinksPage" value="{{ChildLinks.name}}" LinksId="{{ChildLinks.id}}" /></div>
+				<ion-item>
+					<div class="fnt-bld" style="margin-left:27px;white-space:initial;width:80%;">{{ChildLinks.name}}</div>
+					<div class="item-icon-right ChildLinksCls" ChildLinkId="{{ChildLinks.id}}" style="width:20%" ng-if="ChildLinks.is_children">
+						<i class="icon ion-ios-arrow-right"></i>
+					</div>
+				</ion-item>
+			</div>
+			<div class="NoChildLinksFound" style="display:none;"></div>
+			
+			
+		
+			<!--<ion-item ng-repeat="(key, Links) in LinksdataMore" class="LinkCls" AccntId="{{Links.id}}">
+				<div class="fnt-bld">{{Links.name}}</div>
+				<div class="item-icon-right" ng-if="is_children">
+					<i class="icon ion-ios-arrow-right"></i>
+				</div>
+			</ion-item>-->
+		</ion-scroll>
+	</ion-content>
+	<div style="display:none;bottom:10px;width:100%;position:absolute;" class="DisplayChildPageSelectButton">
+		<button class="button button-full button-energized" id="SelectChildPageLink{{LinkPageIdToPass}}">
+			Select Page
+		</button>
+	</div>
+</ion-view>	
+</ion-side-menu-content>
+</ion-side-menus>

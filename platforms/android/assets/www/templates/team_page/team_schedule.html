@@ -1,0 +1,78 @@
+<style>
+	.heading-div{font-weight:bold;height:50px;}
+	.heading-div .sche-name{font-family:'OpenSans Normal' !important;font-size:13px;width:50%;box-sizing:border-box;padding:15px;}
+	.heading-div .sche-name.t-right{text-align:right;}
+</style>
+<ion-view view-title="Team" ng-controller="TeamScheduleCtrl" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+			<h1 class="title" style="text-align:center;">Schedule</h1>	
+		</div>
+	</ion-header-bar>
+	<ion-content>
+		<ion-scroll direction="y" style="height:90vh;" id="scroll_list" delegate-handle="small">
+			<ion-refresher on-refresh="doRefresh()" disable-pulling-rotation=true></ion-refresher>
+			<div ng-repeat="(key, value) in schedules | groupBy: 'actual_date' | toArray:true" class='repeat_div'>
+				<div class="heading-div" ng-style="value[0].is_today === true && {'background-color':'#ffbb99','color':'#fff'}  || value[0].is_today === false && {'background-color':'#e5e5e5','color':'#000'}" id="{{value[0]['id']}}">
+					<div class="fl sche-name calnder-hd"><span ng-if="value[0].is_today">Today, </span>{{value[0]['day']}}</div>
+					<div class="fr sche-name calnder-hd t-right"> {{value[0]['date']}} </div>
+					<div class="cb"></div>
+				</div>
+				<div style="height:10px;"></div>
+				<div ng-repeat="activity in value" class="calender-data">
+					<div class="main-block {{activity.event_type}}">
+						<div class="main-block-row" ng-if="(activity.event_type == 'upcoming') || (activity.event_type == 'completed' && activity.home_score == null && activity.visiting_score == null)">
+							<div class="block1" ng-if="activity.time != 'NA'" ng-click="goEventDetail('{{activity.id}}')">{{activity.time}}</div>
+							<div class="block1" ng-if="activity.time == 'NA'"></div>
+							<div class="block2">
+								<div class="full-width" ng-if="activity.home_team != 'NA' && activity.visiting_team != 'NA'" ng-click="goEventDetail('{{activity.id}}')">{{activity.visiting_team}} @ {{activity.home_team}}</div>
+								
+								<div class="full-width" ng-if="activity.home_team != 'NA' && activity.visiting_team == 'NA'" ng-click="goEventDetail('{{activity.id}}')">{{activity.home_team}}</div>
+								
+								<div class="full-width" ng-if="activity.home_team == 'NA' && activity.visiting_team != 'NA'" ng-click="goEventDetail('{{activity.id}}')">{{activity.visiting_team}}</div>
+								
+								 <div ng-if="activity.name != 'NA'" ng-click="goEventDetail('{{activity.id}}')">({{activity.name}})</div>
+								
+								<div class="full-width" ng-if="(activity.name == 'NA' && activity.type != 'NA' && activity.type != 'Game' && activity.home_team != 'NA' && activity.visiting_team != 'NA') || (activity.name == 'NA' && activity.type != 'NA' && (activity.home_team == 'NA' || activity.visiting_team == 'NA'))" ng-click="goEventDetail('{{activity.id}}')">({{activity.type}})</div>
+								
+
+								<div ng-click="showLocation('{{activity.location}}');" style="color:#0000FF;" class="full-width" ng-if="activity.venue != 'NA' && activity.location != ''">{{activity.venue}}</div>
+								
+								<div class="full-width" ng-if="activity.venue != 'NA' && activity.location == ''">{{activity.venue}}</div>
+							</div>
+						<div class="block3"><!--div class="fr right-arrw"></div--></div>
+						</div>
+						<div ng-if="activity.event_type == 'completed' && activity.home_score != null && activity.visiting_score != null" class="main-block-row" >
+							<div class="block1" ng-if="activity.time != 'NA'" ng-click="goEventDetail('{{activity.id}}')">{{activity.time}}</div>
+							<div class="block1" ng-if="activity.time == 'NA'"></div>
+							<div class="block2">
+								<div ng-repeat="score in activity.score" class="full-width">
+									<div class="mt10">
+										<div ng-if="activity.home_team != 'NA'" ng-style="score.homeScore>score.visitScore === true && {'font-weight':'bold'}">
+                                        <span>{{activity.home_team}}:&nbsp;</span>
+											<span>{{score.homeScore}}</span>
+										</div>
+										<div ng-if="activity.visiting_team != 'NA'" ng-style="score.visitScore>score.homeScore === true && {'font-weight':'bold'}">
+                                        <span>{{activity.visiting_team}}:&nbsp;</span>
+											<span>{{score.visitScore}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						<div class="block3"><!--div class="fr right-arrw"></div--></div>
+						</div>
+					</div>
+					</div>
+			</div>
+			<ion-item style="color:red;text-align:center;display:none;white-space: pre-line;" class="nrm-fnt" id="error_content"></ion-item>
+			<ion-infinite-scroll on-infinite="LoadUpcoming()" distance="1%" ng-if="!noMoreUpcomingEvent"></ion-infinite-scroll>
+			<!--ion-item class="scroll-bottom-div" style="padding-bottom:340px;" ng-if="schedules.length>1 && schedules.length<5"></ion-item-->
+            <!--ion-item class="scroll-bottom-div" style="padding-bottom:100px;" ng-if="schedules.length==1 || schedules.length>5"></ion-item-->
+            <ion-item class="scroll-bottom-div" style="padding-bottom:100px;"></ion-item>
+		</ion-scroll>
+	</ion-content>
+	<div class="bar bar-footer bar-dark">
+        <button class="button" ng-click="goToday()" id="today_btn">Today</button>
+    </div>
+</ion-view>

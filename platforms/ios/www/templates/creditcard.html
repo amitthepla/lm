@@ -1,0 +1,75 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+		<ion-view view-title="Add Credit Card" ng-controller="AddCreditcardCtrl" ng-init="init()">
+		<ion-header-bar>
+			<div class="bar bar-header bar-dark login-header">
+				<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+				<h1 class="title" style="text-align:center;">Add a Credit Card</h1>
+			</div>	
+		</ion-header-bar>
+		<ion-content>
+			<ion-scroll direction="y" style="height:90vh;">
+				<form name="CreditCardForm">
+					<ion-item>
+						<div class="fnt-bld fnt-clr mb10">Credit Card Information</div>
+						<div class="mt10 mb10">
+							<div class="list">
+								<label class="item item-input">
+									<!--span class="input-label">Name on Card</span-->
+									<input type="text" id="cardname" ng-model="AddCredit.cardName" autocomplete="off" placeholder="Name on Card">
+								</label>
+								<label class="item item-input">
+									<!--span class="input-label">Card number</span-->
+									<input type="text" pattern="[0-9]*" id="card_number" ng-model="AddCredit.cardNo" autocomplete="off" placeholder="Card number">
+									<div class="card-icon" id="card-icon"></div>
+								</label>
+								<label class="item item-input">
+									<span class="input-label" ng-if="!AddCredit.expDate" style="color: #aaa;">Exp. Date</span>
+									<input type="month" id="exp_date" ng-model="AddCredit.expDate" autocomplete="off">
+								</label>
+								<label class="item item-input">
+									<!--span class="input-label">CVV</span>-->
+									<input type="text" pattern="[0-9]*" id="cvv" ng-model="AddCredit.cvv" autocomplete="off" placeholder="CVV" maxlength="4">
+								</label>
+							</div>
+						</div>
+                        <input type="hidden" id="card_type">
+                        <input type="hidden" id="last4">
+						<div class="fnt-bld fnt-clr mt10">Billing Address</div>
+						<div class="mt10 mb10">
+							<div class="list">
+								<label class="item item-input">
+									<!--span class="input-label">Street</span-->
+									<input type="text" ng-model="AddCredit.street" id="street" autocomplete="off" placeholder="Street">
+								</label>
+								<label class="item item-input">
+									<!--span class="input-label">Street2</span-->
+									<input type="text" ng-model="AddCredit.street2" id="street2" autocomplete="off" placeholder="Street2">
+								</label>
+								<label class="item item-input">
+									<!--span class="input-label">City</span>-->
+									<input type="text" ng-model="AddCredit.city" id="city" autocomplete="off" placeholder="City">
+								</label>
+								<label class="item item-input">
+									<!--span class="input-label">State</span-->
+									<input type="text" ng-model="AddCredit.state" id="state" autocomplete="off" placeholder="State">
+								</label>
+								<label class="item item-input">
+									<!--span class="input-label">Zip</span-->
+									<input type="tel" ng-model="AddCredit.zip" id="zip" numbers-only="numbers-only" autocomplete="off" placeholder="Zip">
+									</label>
+							</div>
+						</div>
+						<div class="mt10 mb10">
+							<button class="button button-full button-energized" ng-click="SaveCreditCard();">
+								<span>Continue</span><span id="loader-span"><img src="img/ajax-loader.gif"/></span>
+							</button>
+						</div>
+					</ion-item>
+				</form>
+			</ion-scroll>
+		</ion-content>
+		</ion-view>	
+	</ion-side-menu-content>
+</ion-side-menus>

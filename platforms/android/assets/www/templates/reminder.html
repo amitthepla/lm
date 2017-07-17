@@ -1,0 +1,176 @@
+<style>
+    #btn_content{padding:5px 16px;height: 73px;position:relative;}
+</style>
+<ion-side-menus>
+    <ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+        <ion-side-menu-content drag-content="false">
+            <ion-view view-title="Reminder" ng-init="init()">
+            <ion-header-bar>
+                <div class="bar bar-header bar-dark login-header">
+                    <button ng-click="toggleLeft()" class="button icon ion-navicon"></button>
+                    <h1 class="title" style="text-align:center;">Notification Settings</h1>
+                    <!-- <button class="button" ng-click="save_reminder()">Save</button> -->
+                </div>
+            </ion-header-bar>
+            <ion-content style="display:none;" class="DisplayData">
+                <ion-item id="btn_content"></ion-item>
+                <div id="btn-loader"><img src="img/ajax-loader.gif"/></div>
+                <ion-scroll direction="y" style="height:87vh;">
+                    <!-- Game Reminders -->
+                    <ion-item class="fnt-bld" style="margin-top: 7px;background-color: #eee;">
+                        Game reminders:
+                    </ion-item>
+                    <ion-item>
+                        <div class="fl nrm-fnt rem-tog-txt" style="width:70%;">
+                            1 Hour in advance
+                        </div>
+                        <div class="fr" style="width:29%;padding-left:5px;">
+                            <div>
+                                <label class="toggle toggle-balanced">
+                                    <input type="checkbox" id="one_hour_in_advance" ng-click="save_reminder();" class="chk-setting">
+                                    <div class="track">
+                                        <div class="handle"></div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cb"></div>
+                    </ion-item>
+                    <ion-item>
+                        <div class="fl nrm-fnt rem-tog-txt" style="width:70%;">
+                            2 Hours in advance
+                        </div>
+                        <div class="fr" style="width:29%;padding-left:5px;">
+                            <div>
+                                <label class="toggle toggle-balanced">
+                                    <input type="checkbox" id="two_hours_in_advance" ng-click="save_reminder();" class="chk-setting">
+                                    <div class="track">
+                                        <div class="handle"></div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cb"></div>
+                    </ion-item>
+                    <ion-item>
+                        <div class="fl nrm-fnt rem-tog-txt" style="width:70%;">
+                            1 Day in advance
+                        </div>
+                        <div class="fr" style="width:29%;padding-left:5px;">
+                            <div>
+                                <label class="toggle toggle-balanced">
+                                    <input type="checkbox" id="one_day_in_advance" ng-click="save_reminder();" class="chk-setting">
+                                    <div class="track">
+                                        <div class="handle"></div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cb"></div>
+                    </ion-item>
+                    <ion-item>
+                        <div class="fl nrm-fnt rem-tog-txt" style="width:70%;">
+                            2 Days in advance
+                        </div>
+                        <div class="fr" style="width:29%;padding-left:5px;">
+                            <div>
+                                <label class="toggle toggle-balanced">
+                                    <input type="checkbox" id="two_days_in_advance" ng-click="save_reminder();" class="chk-setting">
+                                    <div class="track">
+                                        <div class="handle"></div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cb"></div>
+                    </ion-item>
+                    <ion-item>
+                        <div class="fl nrm-fnt rem-tog-txt" style="width:70%;">
+                            1 Week in advance
+                        </div>
+                        <div class="fr" style="width:29%;padding-left:5px;">
+                            <div>
+                                <label class="toggle toggle-balanced">
+                                    <input type="checkbox" id="one_week_in_advance" ng-click="save_reminder();" class="chk-setting">
+                                    <div class="track">
+                                        <div class="handle"></div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cb"></div>
+                    </ion-item>
+                    <!-- Notifications -->
+                    <ion-item class="fnt-bld" style="background-color: #eee;">
+                        Notifications:
+                    </ion-item>
+                    <ion-item>
+                        <div class="fl nrm-fnt rem-tog-txt" style="width:70%;">
+                            Game Cancellations/postponements
+                        </div>
+                        <div class="fr" style="width:29%;padding-left:5px;">
+                            <div>
+                                <label class="toggle toggle-balanced">
+                                    <input type="checkbox" id="event_rpc" ng-click="save_reminder();" class="chk-setting">
+                                    <div class="track">
+                                        <div class="handle"></div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cb"></div>
+                    </ion-item>
+                    <!-- <ion-item>
+                        <div class="fl nrm-fnt rem-tog-txt" style="width:70%;">
+                            Instant Messages from Team mates
+                        </div>
+                        <div class="fr" style="width:29%;padding-left:5px;">
+                            <div>
+                                <label class="toggle toggle-balanced">
+                                    <input type="checkbox" id="instant_msg">
+                                    <div class="track">
+                                        <div class="handle"></div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cb"></div>
+                    </ion-item> -->
+                    <ion-item>
+                        <div class="fl nrm-fnt rem-tog-txt" style="width:70%;">
+                            Team News Posts
+                        </div>
+                        <div class="fr" style="width:29%;padding-left:5px;">
+                            <div>
+                                <label class="toggle toggle-balanced">
+                                    <input type="checkbox" id="team_news" ng-click="save_reminder();" class="chk-setting">
+                                    <div class="track">
+                                        <div class="handle"></div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cb"></div>
+                    </ion-item>
+                    <ion-item>
+                        <div class="fl nrm-fnt rem-tog-txt" style="width:70%;">
+                            {{orgTitleReminder}} News Posts
+                        </div>
+                        <div class="fr" style="width:29%;padding-left:5px;">
+                            <div>
+                                <label class="toggle toggle-balanced">
+                                    <input type="checkbox" id="org_news" ng-click="save_reminder();" class="chk-setting">
+                                    <div class="track">
+                                        <div class="handle"></div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="cb"></div>
+                    </ion-item>
+                    <ion-item class="side-menu" style="border-bottom: 1px solid #fff;padding-bottom:100px"></ion-item>
+                </ion-scroll>
+            </ion-content>
+        </ion-view>
+    </ion-side-menu-content>
+</ion-side-menus>

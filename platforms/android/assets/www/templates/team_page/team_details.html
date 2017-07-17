@@ -1,0 +1,75 @@
+<ion-view view-title="Team" ng-controller="TeamDetailCtrl" ng-init="init()">
+			<ion-header-bar>
+				<div class="bar bar-header bar-dark login-header">
+					<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+					<h1 class="title" style="text-align:center;">Team</h1>	
+				</div>
+			</ion-header-bar>
+			<ion-content>
+				<ion-scroll direction="y" style="height:90vh;">
+				<ion-item class="bar bar-header bar-calm list-head">
+					<div class="org-name title">{{team_detail.name}}</div>
+				</ion-item>
+				<ion-item ng-if="team_detail.label != 'N/A' && team_detail.amount != 'N/A'">
+					<div class="nrm-fnt" style="color:red;">
+						<span ng-if="team_detail.label != 'N/A'">{{team_detail.label}}: </span> 
+						<span ng-if="team_detail.amount != 'N/A'">${{team_detail.amount}}</span>
+					</div>
+					<div class="mt10" ng-if="team_detail.label != 'N/A' && team_detail.amount != 'N/A'">
+						<button class="button button-full button-energized" ng-click="teamPayment();">
+							Make a Payment
+						</button>
+					</div>
+				</ion-item>
+				<ion-item id="next_game">
+					<div class="fnt-bld fnt-clr">Next Game</div>
+					<div style="display:none;text-align:center;height:30px;" id="load_game">
+						<img src="img/ajax-loader.gif"/>
+					</div>
+					<div id="next_game_info" style="display:none;height:30px;">
+						<div class="fnt-bld">{{day}}, {{date}} at {{next_game.time}}</div>
+						<div class="nrm-fnt" style="color:#999;">vs. {{next_game.visiting_team}}</div>
+					</div>
+					<div style="display:none;height:30px;color:red;" id="no_data" class="nrm-fnt">
+						No next schedule available for this team.
+					</div>
+				</ion-item>
+				<ion-item ng-click="scheduleResult(team_detail.id);">
+					<div class="fnt-bld">Schedule & Results</div>
+					<div class="item-icon-right">
+						<i class="icon ion-ios-arrow-right"></i>
+					</div>
+				</ion-item>
+				<ion-item ng-click="teammembersdetail(team_detail.id, team_detail.name);">
+					<div class="fnt-bld">Roster</div>
+					<div class="item-icon-right">
+						<i class="icon ion-ios-arrow-right"></i>
+					</div>
+				</ion-item>
+				<ion-item ng-click="teamstandings(team_detail.id, team_detail.activity_id, team_detail.name);">
+					<div class="fnt-bld">Standings</div>
+					<div class="item-icon-right">
+						<i class="icon ion-ios-arrow-right"></i>
+					</div>
+				</ion-item>
+				<ion-item ng-click="teamphotos();">
+					<div class="fnt-bld">Photos</div>
+					<div class="item-icon-right">
+						<i class="icon ion-ios-arrow-right"></i>
+					</div>
+				</ion-item>
+				<ion-item ng-click="teamNews(team_detail.id, team_detail.activity_id);">
+					<div class="fnt-bld">News</div>
+					<div class="item-icon-right">
+						<i class="icon ion-ios-arrow-right"></i>
+					</div>
+				</ion-item>
+				<ion-item ng-click="teamsendmessage(team_detail.id, team_detail.activity_id);">
+					<div class="fnt-bld">Send a Message</div>
+					<div class="item-icon-right">
+						<i class="icon ion-ios-arrow-right"></i>
+					</div>
+				</ion-item>
+				</ion-scroll>
+			</ion-content>
+</ion-view>

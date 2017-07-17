@@ -1,0 +1,31 @@
+
+<ion-view view-title="Add Player" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="GoBack()"></a>
+			<h1 class="title" style="text-align:center;">Add a Player</h1>	
+		</div>
+	</ion-header-bar>
+	<ion-content class="scroll-content">
+		<form name="AddRosterForm">
+			<ion-item>
+				<div class="list">
+					<label class="item item-input">
+						<input type="text" placeholder="First Name" id="first_name" ng-model="AddRoster.first_name" name="first_name" autocomplete="off">
+					</label>
+					<label class="item item-input">
+						<input type="text" placeholder="Last Name" id="last_name" ng-model="AddRoster.last_name" name="last_name" autocomplete="off">
+					</label>
+					<label class="item item-input" ng-class="{ 'has-error' : AddRosterForm.email.$invalid && !AddRosterForm.email.$pristine }">
+						<input type="email" placeholder="Email Address" id="email" ng-model="AddRoster.email" name="email" required autocomplete="off">
+					</label>
+				</div>
+			</ion-item>
+			<ion-item>
+				<button class="button button-full button-energized" ng-click="save_roster();" ng-disabled="AddRosterForm.$invalid">
+					<span>Save roster member</span><span id="loader-span3"><img src="img/ajax-loader.gif"/></span>
+				</button>
+			</ion-item>
+		</form>
+	</ion-content>
+</ion-view>

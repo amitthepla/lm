@@ -1,0 +1,78 @@
+<ion-side-menus>
+    <ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+    <ion-side-menu-content drag-content="false">
+        <ion-view view-title="Schedules" ng-controller="CalenderCtrl" ng-init="init()">
+            <ion-header-bar>
+                <div class="bar bar-header bar-dark login-header">
+                    <button ng-click="toggleLeft()" class="button icon ion-navicon"></button>
+					<h1 class="title" style="text-align:center;">My Schedule</h1>
+					<button class="button icon-left" ng-click="filterSchedule()" style="border-color:#444 !important;"><img src="img/gear.png" style="width:25px;margin-top:3px;"/></button>
+                </div>
+            </ion-header-bar>
+            <ion-content>
+				<div class="tab-menu">
+					<div class="fl tab" id="upcoming_event" ng-click="display_event('upcoming')">Upcoming Events</div>
+					<div class="fl tab" id="recent_event" ng-click="display_event('completed')">Recent Events</div>
+					<div class="cb"></div>
+				</div>
+				<div style="height:45px;"id='main_content_ion'></div>
+                <ion-scroll direction="y" style="height:87vh;" id="scroll_list" delegate-handle="small" on-finish-render="ngRepeatFinished">
+					
+                    <div ng-repeat="(key, value) in events | groupBy: 'actual_date' | toArray:true" id="{{value[0]['actual_date']}}" class='repeat_div'>
+                        <div style='font-weight:bold;height:50px;background-color:#e5e5e5' ng-if="value[0]['date'] != ''">
+                            <div class="fl sche-name calnder-hd" >{{value[0]['day']}}</div>
+                            <div class="fr sche-name calnder-hd"> {{value[0]['date']}} </div>
+							<div class="cb"></div>
+                        </div>
+                        <div style='font-weight:bold;height:50px;background-color:#e5e5e5' ng-if="value[0]['date'] == ''">
+                            <div class="fl sche-name calnder-hd" >TBD</div>
+                            <div class="fr sche-name calnder-hd"></div>
+							<div class="cb"></div>
+                        </div>
+                        <div style="height:10px;"></div>
+                        <div ng-repeat="activity in value" class="calender-data">
+
+							<div class="main-block">
+							<div class="main-block-row">
+								<div class="block1" ng-if="activity.time != 'NA'" ng-click="goEventDetail('{{activity.id}}')">{{activity.time}}</div>
+								<div class="block1" ng-if="activity.time == 'NA'"></div>
+								<div class="block2">
+									<div class="full-width" ng-if="(activity.home_team != 'NA' && activity.home_team != 'TBD') && (activity.visiting_team != 'NA' && activity.visiting_team != 'TBD')" ng-click="goEventDetail('{{activity.id}}')">{{activity.visiting_team}} @ {{activity.home_team}}</div>
+									
+									<div class="full-width" ng-if="(activity.home_team != 'NA' && activity.home_team != 'TBD') && (activity.visiting_team == 'NA' || activity.visiting_team == 'TBD')" ng-click="goEventDetail('{{activity.id}}')">{{activity.home_team}}</div>
+									
+									<div class="full-width" ng-if="(activity.home_team == 'NA' || activity.home_team == 'TBD') && (activity.visiting_team != 'NA' && activity.visiting_team != 'TBD')" ng-click="goEventDetail('{{activity.id}}')">{{activity.visiting_team}}</div>
+									
+									 <div ng-if="activity.name != 'NA'" ng-click="goEventDetail('{{activity.id}}')">({{activity.name}})</div>
+									
+									<div class="full-width" ng-if="(activity.name == 'NA' && activity.type != 'NA' && activity.type != 'Game' && activity.home_team != 'NA' && activity.visiting_team != 'NA' && activity.home_team != 'TBD' && activity.visiting_team != 'TBD') || (activity.name == 'NA' && activity.type != 'NA' && (activity.home_team == 'NA' || activity.visiting_team == 'NA' || activity.home_team == 'TBD' || activity.visiting_team == 'TBD'))" ng-click="goEventDetail('{{activity.id}}')">({{activity.type}})</div>
+
+									<div style="color:#999;" class="nrm-fnt">({{activity.status}})</div>					
+
+									<div ng-click="showLocation('{{activity.location}}');" style="color:#0000FF;" class="full-width" ng-if="activity.venue != 'NA' && activity.location != ''">{{activity.venue}}</div>
+									
+									<div class="full-width" ng-if="activity.venue != 'NA' && activity.location == ''">{{activity.venue}}</div>
+								</div>
+								<div class="block3"><div class="fr right-arrw" ng-click="goEventDetail('{{activity.id}}')"></div></div>
+							</div>
+							
+							</div>
+                        </div>
+                    </div>
+					<ion-items>
+						<div style="text-align:center;margin-top:10px;margin-bottom:10px;color:red;display:none;" id="norecord"></div>
+					</ion-items>
+					<span id="DisplayLoader">
+						<ion-infinite-scroll on-infinite="LoadMore()" distance="1%" ng-if="!noMoreItemsAvailable"></ion-infinite-scroll>
+					</span>
+					<ion-item style="border-bottom: 1px solid #fff;padding-bottom:65px;"></ion-item>
+					</ion-scroll>
+            </ion-content>
+            <div class="bar bar-footer bar-dark">
+                <button class="button" ng-click="showTodayEvent();" id="today_btn" ng-if="isToday">Today</button>
+				<!--span ng-click="resetAll()" style="margin-top: 13px;margin-left: 10px;display:none;" id="reset_btn">Reset</span-->
+                <!--button class="button" ng-click="createEvent()">Create Event</button-->
+            </div>
+        </ion-view>
+    </ion-side-menu-content>
+</ion-side-menus>

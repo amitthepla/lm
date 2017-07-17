@@ -1,0 +1,43 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+		<ion-view view-title="Team" ng-controller="TeamCtrl" ng-init="init()">
+			<ion-header-bar>
+				<div class="bar bar-header bar-dark login-header">
+					<button ng-click="toggleLeft()" class="button icon ion-navicon"></button>
+					<h1 class="title" style="text-align:center;">Team</h1>	
+				</div>
+			</ion-header-bar>
+			<ion-content class="scroll-content">
+				<ion-scroll direction="y" style="height:90vh;">
+					<div ng-repeat="team in teams">
+						<ion-item>
+							<div ng-click="openDetail(team.id)">
+								<div class="fl">
+									<div class="fnt-bld fnt-clr">{{team.name}}</div>
+									<div class="nrm-fnt mt10 mb10" style="color:#999;">{{team.activity_name}}</div>
+									<div class="nrm-fnt" style="color:red;">
+										<span ng-if="team.label != 'N/A'">{{team.label}}: </span> <span ng-if="team.amount != 'N/A'">${{team.amount}}</span>
+										<!--a href="javascript:void(0);" style="color:#0000FF;text-decoration:none;" ng-if="team.label != 'N/A' && team.amount != 'N/A'" ng-click="teamPayment(team.id);">Make a payment</a-->
+									</div>
+								</div>
+								<div class="fr team_list_arwfwd">
+									<div class="item-icon-right">
+										<i class="icon ion-ios-arrow-right"></i>
+									</div>
+								</div>
+								<div class="cb"></div>
+							</div>
+							<div class="mt10" ng-if="team.label != 'N/A' && team.amount != 'N/A'">
+								<button class="button button-full button-energized" ng-click="teamPayment(team.id);">
+									Make a payment
+								</button>
+							</div>
+						</ion-item>
+					</div>
+					<ion-item style="color:red;text-align:center;display:none;" class="nrm-fnt" ng-if="isError">No data found.</ion-item>
+				</ion-scroll>
+			</ion-content>
+		</ion-view>	
+	</ion-side-menu-content>
+</ion-side-menus>

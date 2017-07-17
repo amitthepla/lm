@@ -1,0 +1,40 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+		<ion-view view-title="Roster" ng-controller="RosterCtrl" ng-init="init()">
+			<ion-header-bar>
+				<div class="bar bar-header bar-dark login-header">
+					<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+					<h1 class="title" style="text-align:center;">Roster</h1>	
+				</div>
+			</ion-header-bar>
+			<ion-content class="scroll-content">
+				<ion-item style="background-color:#ddd;">
+					<div class="fnt-bld fnt-clr">Orioles Coordinators</div>
+				</ion-item>
+				<div ng-repeat="Coordinator in Coordinators">
+					<ion-item>
+						<div class="fnt-bld mb10 fnt-clr">{{Coordinator.role}}</div>
+						<div class="fnt-bld mt10 mb10">{{Coordinator.firstname}} {{Coordinator.lastname}}</div>
+						<div class="nrm-fnt">{{Coordinator.email}}</div>
+					</ion-item>
+				</div>
+				<ion-item>
+					<div class="bdr fnt-bld div-btn" ng-click="addCoordinator()">Add a coordinator</div>
+				</ion-item>
+				<ion-item style="background-color:#ddd;">
+					<div class="fnt-bld fnt-clr">Orioles Roster</div>
+				</ion-item>
+				<div ng-repeat="Player in Players">
+					<ion-item>
+						<div class="fnt-bld mb10 fnt-clr">{{Player.firstname}} {{Player.lastname}}</div>
+						<div class="nrm-fnt">{{Player.email}}</div>
+					</ion-item>
+				</div>
+				<ion-item>
+					<div class="bdr fnt-bld div-btn" ng-click="addPlayer()">Add a player</div>
+				</ion-item>
+			</ion-content>
+		</ion-view>	
+	</ion-side-menu-content>
+</ion-side-menus>

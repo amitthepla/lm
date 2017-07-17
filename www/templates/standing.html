@@ -1,0 +1,62 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content>
+		<ion-view view-title="Team" ng-controller="StandingCtrl" ng-init="init()">
+			<ion-header-bar>
+				<div class="bar bar-header bar-dark login-header">
+					<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+					<h1 class="title" style="text-align:center;">Standings</h1>	
+				</div>
+			</ion-header-bar>
+			<ion-content class="scroll-content">
+				<ion-item>
+				
+				</ion-item>
+				<ion-item>
+					<div class="row row-center">
+						<div class="col col-50 nrm-fnt bdr">Team</div>
+						<div class="col nrm-fnt bdr">W</div>
+						<div class="col nrm-fnt bdr">L</div>
+						<div class="col nrm-fnt bdr">T</div>
+						<div class="col col-20 nrm-fnt bdr">%</div>
+					</div>
+					<div class="row row-center">
+						<div class="col col-50 nrm-fnt bdr">Blue Jays</div>
+						<div class="col nrm-fnt bdr">20</div>
+						<div class="col nrm-fnt bdr">0</div>
+						<div class="col nrm-fnt bdr">0</div>
+						<div class="col col-20 nrm-fnt bdr">1.000</div>
+					</div>
+					<div class="row row-center">
+						<div class="col col-50 nrm-fnt bdr">Orioles</div>
+						<div class="col nrm-fnt bdr">18</div>
+						<div class="col nrm-fnt bdr">2</div>
+						<div class="col nrm-fnt bdr">0</div>
+						<div class="col col-20 nrm-fnt bdr">.900</div>
+					</div>
+					<div class="row row-center">
+						<div class="col col-50 nrm-fnt bdr">Yankees</div>
+						<div class="col nrm-fnt bdr">17</div>
+						<div class="col nrm-fnt bdr">3</div>
+						<div class="col nrm-fnt bdr">0</div>
+						<div class="col col-20 nrm-fnt bdr">.850</div>
+					</div>
+					<div class="row row-center">
+						<div class="col col-50 nrm-fnt bdr">Red Sox</div>
+						<div class="col nrm-fnt bdr">10</div>
+						<div class="col nrm-fnt bdr">10</div>
+						<div class="col nrm-fnt bdr">0</div>
+						<div class="col col-20 nrm-fnt bdr">.500</div>
+					</div>
+					<div class="row row-center">
+						<div class="col col-50 nrm-fnt bdr">Rays</div>
+						<div class="col nrm-fnt bdr">6</div>
+						<div class="col nrm-fnt bdr">20</div>
+						<div class="col nrm-fnt bdr">0</div>
+						<div class="col col-20 nrm-fnt bdr">.400</div>
+					</div>
+				</ion-item>
+			</ion-content>
+		</ion-view>	
+	</ion-side-menu-content>
+</ion-side-menus>

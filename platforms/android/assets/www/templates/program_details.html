@@ -1,0 +1,62 @@
+<ion-view>
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+			<h1 class="title" style="text-align:center;">Programs Details</h1>	
+			<!--button class="button">Done</button-->
+		</div>
+	</ion-header-bar>
+	<ion-content ng-controller="ProgramDetailCtrl" ng-init="init()">
+		<ion-scroll direction="y" style="height:90vh;">
+			<ion-item>
+				<div class="fnt-bld fnt-clr" style="width:95%;white-space:pre-line;"><span>{{regOptions.title}}</span> <span ng-if="regOptions.on_sale_message == 'Registration Closed'" style="color:#999;">(Sold Out)</span></div>
+				<div class="mt10">
+					<div class="regd-inf">
+						<div class="fl fnt-bld">Start:</div>
+						<div class="fl nrm-fnt ml10">{{regOptions.activity_start}}</div>
+						<div class="cb"></div>
+						<div class="fl fnt-bld">End:</div>
+						<div class="fl nrm-fnt ml10">{{regOptions.activity_end}}</div>
+						<div class="cb"></div>
+						<div class="fl fnt-bld" ng-if="regOptions.address.name">Location:</div>
+                        <div ng-if="regOptions.address.name">
+						<div class="fl nrm-fnt ml10" ng-click="showLocation('{{regOptions.address.map_address}}');" ng-if="regOptions.address.map_address != ''"  style="color:#0000FF;">{{regOptions.address.name}}</div>
+                        <div class="fl nrm-fnt ml10" ng-if="regOptions.address.map_address == ''">{{regOptions.address.name}}</div>
+                        </div>
+						<div class="cb"></div>
+					</div>	
+				</div>
+			</ion-item>
+			<ion-item>
+				<div class="fnt-bld fnt-clr">Registration Details</div>
+				<div class="mt10">
+					<div class="regd-inf">
+						<div class="fl fnt-bld" ng-if="regOptions.registration_start != null">Registration Start:</div>
+						<div class="fl nrm-fnt ml10" ng-if="regOptions.registration_start != null">{{regOptions.registration_start}}</div>
+						<div class="cb"></div>
+						<div class="fl fnt-bld" ng-if="regOptions.registration_end != null">Registration End:</div>
+						<div class="fl nrm-fnt ml10" ng-if="regOptions.registration_end != null">{{regOptions.registration_end}}</div>
+						<div class="cb"></div>
+						<div class="fnt-bld" ng-if="regOptions.registration_products.length">Registration Options:</div>
+						<ul ng-repeat="regOption in regOptions.registration_products">
+							<li class="nrm-fnt">
+								{{regOption.name}}: ${{regOption.price}}
+							</li>
+						</ul>
+						<div class="mt10 mb10" ng-if="regOptions.is_registration_button">
+							<button class="button button-full button-energized" ng-click="registerNow()">
+								Register Now
+							</button>
+						</div>
+					</div>	
+				</div>
+			</ion-item>
+			<ion-item ng-if="regOptions.description != ''">
+				<div class="fnt-bld fnt-clr">Program Details</div>
+				<div class="mt10">
+					<div class="regd-inf nrm-fnt" ng-bind-html="regOptions.description" style="white-space:pre-line;"></div>
+				</div>
+			</ion-item>
+		</ion-scroll>
+	</ion-content>
+</ion-view>

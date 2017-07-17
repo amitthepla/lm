@@ -1,0 +1,102 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+		<ion-side-menu-content>
+			<ion-view view-title="Select Feeds" ng-controller="SelectFeedsCtrl" ng-init="init()">
+				<ion-header-bar>
+					<div class="bar bar-header bar-dark login-header">
+						<a class="button icon-left ion-chevron-left button-clear" ng-click="myGoBack()"></a>
+						<h1 class="title" style="text-align:center;">Select Feeds</h1>	
+						<button class="button">Done</button>
+					</div>
+				</ion-header-bar>
+				<ion-content class="scroll-content">
+					<ion-item>
+						<div class="mt10 mb10 bdr" style="padding: 10px 5px 5px;">
+							<div class="fl nrm-fnt" style="padding-top:5px;">Home Page Carousel</div>
+							<div class="fr sche-tog">
+								<label class="toggle toggle-balanced">
+									<input type="checkbox" class="chk-day" checked="checked" value="mon"/>
+									<div class="track">
+										<div class="handle"></div>
+									</div>
+								</label>
+							</div>
+							<div class="cb"></div>
+						</div>
+						<div class="mt10 mb10 bdr" style="padding: 10px 5px 5px;">
+							<div class="fl nrm-fnt" style="padding-top:5px;">Home Page Slide Show</div>
+							<div class="fr sche-tog">
+								<label class="toggle toggle-balanced">
+									<input type="checkbox" class="chk-day" checked="checked" value="mon"/>
+									<div class="track">
+										<div class="handle"></div>
+									</div>
+								</label>
+							</div>
+							<div class="cb"></div>
+						</div>
+						<div class="mt10 mb10 bdr" style="padding: 10px 5px 5px;">
+							<div class="fl nrm-fnt" style="padding-top:5px;">News Scroller</div>
+							<div class="fr sche-tog">
+								<label class="toggle toggle-balanced">
+									<input type="checkbox" class="chk-day" checked="checked" value="mon"/>
+									<div class="track">
+										<div class="handle"></div>
+									</div>
+								</label>
+							</div>
+							<div class="cb"></div>
+						</div>
+						<div class="mt10 mb10 bdr" style="padding: 10px 5px 5px;">
+							<div class="fl nrm-fnt" style="padding-top:5px;">U8</div>
+							<div class="fr sche-tog">
+								<label class="toggle toggle-balanced">
+									<input type="checkbox" class="chk-day" value="mon"/>
+									<div class="track">
+										<div class="handle"></div>
+									</div>
+								</label>
+							</div>
+							<div class="cb"></div>
+						</div>
+						<div class="mt10 mb10 bdr" style="padding: 10px 5px 5px;">
+							<div class="fl nrm-fnt" style="padding-top:5px;">Alumni Slide Show</div>
+							<div class="fr sche-tog">
+								<label class="toggle toggle-balanced">
+									<input type="checkbox" class="chk-day" value="mon"/>
+									<div class="track">
+										<div class="handle"></div>
+									</div>
+								</label>
+							</div>
+							<div class="cb"></div>
+						</div>
+						<div class="mt10 mb10 bdr" style="padding: 10px 5px 5px;">
+							<div class="fl nrm-fnt" style="padding-top:5px;">College Commitments</div>
+							<div class="fr sche-tog">
+								<label class="toggle toggle-balanced">
+									<input type="checkbox" class="chk-day" value="mon"/>
+									<div class="track">
+										<div class="handle"></div>
+									</div>
+								</label>
+							</div>
+							<div class="cb"></div>
+						</div>
+						<div class="mt10 mb10 bdr" style="padding: 10px 5px 5px;">
+							<div class="fl nrm-fnt" style="padding-top:5px;">Champions Banner</div>
+							<div class="fr sche-tog">
+								<label class="toggle toggle-balanced">
+									<input type="checkbox" class="chk-day" value="mon"/>
+									<div class="track">
+										<div class="handle"></div>
+									</div>
+								</label>
+							</div>
+							<div class="cb"></div>
+						</div>
+					</ion-item>
+				</ion-content>
+			</ion-view>	
+		</ion-side-menu-content>
+</ion-side-menus>

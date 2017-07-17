@@ -1,0 +1,168 @@
+<ion-side-menus>
+	<ion-side-menu side="left" ng-include src="'templates/side_menu.html'"></ion-side-menu>
+	<ion-side-menu-content drag-content="false">
+<ion-view view-title="Cart" ng-controller="CartCtrl" ng-init="init()">
+	<ion-header-bar>
+		<div class="bar bar-header bar-dark login-header">
+			<button ng-click="toggleLeft()" class="button icon ion-navicon"></button>
+			<h1 class="title" style="text-align:center;">&nbsp;Cart&nbsp;</h1>
+			<button class="button button-full button-energized chkoutbtn chk-btn" ng-click="openCheckout()">Checkout Now</button>
+		</div>
+	</ion-header-bar>
+	<ion-content>
+	<div id="grad2"></div>
+	<div horizontal-slider class="horizontal-slider">
+		
+		<div class="tab-menu1 cart1 touch">
+			<div style="tab-content-block">
+				<div class="fl tab1" id="cart_items" ng-click="display_cart('cart_items')">Cart <span class="cartItemCountCls"></span></div>
+				<div class="fl tab1" id="saved_items" ng-click="display_cart('saved_items')">Saved Items <span class="savedItemCountCls"></span></div>
+				<div class="fl tab1" style="width:36%" id="incomplete_items" ng-click="display_cart('incomplete_items')">In Progress Registrations <span class="incomItemCountCls"></span></div>
+				<div class="cb"></div>
+			</div>
+		</div>
+		
+	</div>
+	<div id="grad1"></div>
+		
+	<div style="height:45px;"id='main_content_ion'></div>
+	<!--<ion-scroll direction="y" style="height:87vh;">-->
+	<ion-item style="background-color:#DDDDDD;display:none;" class="DisplayTabName"></ion-item>
+	<ion-scroll direction="y" style="height:87vh;" id="cart_scroll_list" delegate-handle="small" on-finish-render="ngRepeatFinished">
+		<!--<ion-item>
+			<div class="fnt-bld fnt-clr">Items in your cart</div>
+		</ion-item>-->
+		<ion-item ng-repeat = "Cart in Carts" ng-if="Cart.type == 'Registration' && Cart.type != 'ProductLineItem'" id="DeleteMoveItem_{{Cart.id}}">
+			<div ng-if="Cart.registration_product">
+				<div class="fnt-bld">{{Cart.registration_product.activity}}</div>
+				<div class="nrm-fnt mt10 mb10" ng-if="Cart.registration_product.human_team">{{Cart.registration_product.human_team}}</div>
+			</div>
+			
+			<span ng-if="Cart.show_product_pricing == true">
+				<div class="nrm-fnt mt10" ng-if="Cart.type == 'Registration' && Cart.type != 'ProductLineItem'"><b>{{Cart.product_pricing_details.price}}:</b> ${{Cart.product_pricing_details.amount}} </div>
+				<span ng-if="Cart.product_pricing_details.discount_details.discount_price_adjustment == true">
+					<div class="nrm-fnt mt10" ng-if="Cart.type == 'Registration' && Cart.type != 'ProductLineItem'"><b>{{Cart.product_pricing_details.discount_details.discount_label}}:</b> ${{Cart.product_pricing_details.discount_details.discount_amount}} </div>
+				</span>
+				<span ng-if="Cart.product_pricing_details.price_adjustment_details.is_price_adjustment == true">
+					<div class="nrm-fnt mt10" ng-if="Cart.type == 'Registration' && Cart.type != 'ProductLineItem'"><b>{{Cart.product_pricing_details.price_adjustment_details.adjustment_label}}:</b> ${{Cart.product_pricing_details.price_adjustment_details.price_adjustment_amout}} </div>
+				</span>
+			</span>	
+
+			<span ng-if="Cart.payment_information.payment_message.label  && Cart.payment_information.payment_message.amount">
+				<div class="nrm-fnt mt10" ng-if="Cart.type == 'Registration' && Cart.type != 'ProductLineItem'"><b>{{Cart.payment_information.payment_message.label}}:</b> ${{Cart.payment_information.payment_message.amount}} </div>
+			</span>
+			
+			<span ng-if="Cart.payment_information.has_payment_option == true">
+				<div class="nrm-fnt mt10" ng-if="Cart.type == 'Registration' && Cart.type != 'ProductLineItem'"><b>{{Cart.payment_information.payment_option}}:</b> ${{Cart.payment_information.payment_option_amount}} </div>
+				<div class="nrm-fnt mt10 fnt-bld">Payment schedule:</div>
+				<ion-item class="options_pay" ng-repeat = "Plan in Cart.payment_information.payment_plan" ng-if="Cart.type == 'Registration' && Cart.type != 'ProductLineItem'">
+					<div class="nrm-fnt" ng-if="Cart.type == 'Registration' && Cart.type != 'ProductLineItem'"><b>{{Plan.date}}:</b> ${{Plan.amount}}</div> 
+				</ion-item>
+			</span>	
+			<div class="fnt-bld mt10">Registration Details</div>
+				<div class="nrm-fnt mb10" ng-if="Cart.team.details.team_name">Team Name: {{Cart.team.details.team_name}}</div>
+				<a href="javascript:void(0)" ng-click="showRegdInf({{Cart.id}})" class="nrm-fnt" id="showRegLink_{{Cart.id}}" ng-if="Cart.participants.length || Cart.team.details.rosters.length || Cart.additional_information.length || Cart.registrant || Cart.team.details.coordinators.length || Cart.emergency_contact">+ View all registration details</a>
+				<a href="javascript:void(0)" ng-click="hideRegdInf({{Cart.id}})" class="nrm-fnt" id="hideRegLink_{{Cart.id}}" style="display:none;">- View all registration details</a>
+				<div id="RegInfDiv_{{Cart.id}}" class="view-reg-inf">
+					<div class="nrm-fnt mt10" ng-if="Cart.registrant">
+						<div class="fnt-bld">Customer: </div>
+						<div>
+							{{Cart.registrant.full_name}}&nbsp;({{Cart.registrant.email}})
+						</div>
+					</div>
+					<div class="nrm-fnt mt10" ng-if="Cart.is_participating">
+						<div class="fnt-bld">Participant: </div>
+						<div class="">
+							{{Cart.participants.full_name}} ({{Cart.participants.email}})</br>
+							{{Cart.participants.address}}</br>
+							{{Cart.participants.city}}, {{Cart.participants.state}} {{Cart.participants.zip}}</br>
+							{{Cart.participants.phone}}
+						</div>
+						<div ng-if="Cart.registration_field_settings[0].skill_level">
+						{{Cart.registration_field_settings[0].skill_level_label}}: {{Cart.registration_field_settings[0].skill_level}}
+						</div>
+						<div ng-if="Cart.registration_field_settings[1].division">
+							{{Cart.registration_field_settings[1].division_label}}: {{Cart.registration_field_settings[1].division}}
+						</div>
+						<div ng-if="Cart.registration_field_settings[2].shirt_size">
+							{{Cart.registration_field_settings[2].shirt_size_label}}: {{Cart.registration_field_settings[2].shirt_size}}
+						</div>
+						<div ng-if="Cart.registration_field_settings[3].short_size">
+							{{Cart.registration_field_settings[3].short_size_label}}: {{Cart.registration_field_settings[3].short_size}}
+						</div>
+					</div>
+					<div class="nrm-fnt mt10" ng-if="Cart.team.details.team_invites.length">
+						<div class="fnt-bld">Roster: </div>
+						<div ng-repeat="rosterRec in Cart.team.details.team_invites">
+							{{rosterRec.full_name}}&nbsp;({{rosterRec.email}})
+						</div>
+					</div>
+					<div class="nrm-fnt mt10" ng-if="Cart.additional_information.length">
+						<div class="fnt-bld">Additional Information: </div>
+						<div ng-repeat="addInf in Cart.additional_information" style="white-space:pre-line;">
+							{{addInf.field_name}}: {{addInf.field_value}}
+						</div>
+					</div>
+					<div class="nrm-fnt mt10" ng-if="Cart.team.details.coordinators.length">
+						<div class="fnt-bld">Coordinators: </div>
+						<div ng-repeat="coordinator in Cart.team.details.coordinators">
+							{{coordinator.address}} ({{coordinator.role}})
+						</div>
+					</div>
+					<div class="nrm-fnt mt10" ng-if="Cart.emergency_contact">
+						<div class="fnt-bld">Emergency Contact: </div>
+						<div>
+							Full Name: {{Cart.emergency_contact.full_name}}
+						</div>
+						<div>
+							Address: {{Cart.emergency_contact.address}}
+						</div>
+						<div>
+							Phone: {{Cart.emergency_contact.phone}}
+						</div>
+					</div>
+					<div class="nrm-fnt mt10" ng-if="Cart.show_friend_requests">
+						<div class="fnt-bld">show friend requests: </div>
+						<div ng-repeat="friendRec in Cart.friend_request_details.friend_request_people">
+							<span>{{friendRec.first_name}}&nbsp;{{friendRec.last_name}}</span> <span ng-if="friendRec.emails[0].address != null">({{friendRec.emails[0].address}})</span>
+						</div>
+					</div>
+					<div class="nrm-fnt mt10" ng-if="Cart.comment != 'NA'">
+						<div class="fnt-bld">Comment: </div>
+						<div>
+							{{Cart.comment}}
+						</div>
+					</div>
+				</div>
+			<div class="mt10 mb10 cart-button" ng-if="buttonDisplay == 1">
+				<button class="button button-small button-positive" ng-click="EditRegistration(Cart.id, Cart.registration_product.id);">Edit</button>
+				<button class="button button-small button-positive delBtn_{{Cart.id}}" ng-click="deleteCart(Cart.id, 'cartItem')">Delete</button>
+				<button class="button button-small button-positive" ng-click="saveForLater(Cart.id)" id="saveLater_{{Cart.id}}">Save for later</button>
+				<img src="img/ajax-loader.gif" style="margin-top:33px;display:none;" class="LoaderItem_{{Cart.id}}"/>
+			</div>
+			<div class="mt10 mb10 cart-button" ng-if="buttonDisplay == 2">
+				<!-- <button class="button button-small button-positive" ng-click="EditRegistration(Cart.id, Cart.registration_product.id);">Edit</button> -->
+				<button class="button button-small button-positive delBtn_{{Cart.id}}" ng-click="deleteCart(Cart.id, 'SavedItem')">Delete</button>
+				<button class="button button-small button-positive" ng-click="moveToCart(Cart.id)" id="loaderMove_{{Cart.id}}">Move to cart</button>
+				<img src="img/ajax-loader.gif" style="margin-top:33px;display:none;" class="LoaderItem_{{Cart.id}}"/>
+			</div>
+			<div class="mt10 mb10 cart-button" ng-if="buttonDisplay == 3">
+				<button class="button button-small button-positive" ng-click="EditRegistration(Cart.id, Cart.registration_product.id);">Edit</button>
+				<button class="button button-small button-positive delBtn_{{Cart.id}}" ng-click="deleteCart(Cart.id, 'incomplete')">Delete</button>
+			</div>
+		</ion-item>
+		
+		<ion-item ng-if="!isItem">
+			<div style="text-align:center;color:red;" class="nrm-fnt">{{noDataMsg}}</div>
+		</ion-item>
+		<span class="DisplayCartBtn">
+			<ion-item style="padding-bottom:30px;border-bottom:none !important;">
+				<button class="button button-full button-energized longchkoutbtn chk-btn" ng-click="openCheckout()">Checkout Now</button>
+			</ion-item>
+			<ion-item style="padding-bottom:53px;border:0px;"></ion-item>
+		</span>	
+		</ion-scroll>
+	</ion-content>
+</ion-view>	
+</ion-side-menu-content>
+</ion-side-menus>
